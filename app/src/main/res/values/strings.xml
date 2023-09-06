@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Skov</string>
+    <string name="log_in">Log In</string>
+    <string name="registration">Registration</string>
+    <string name="user_name">Username</string>
+    <string name="log_out">Log Out</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="next_step">Next</string>
+    <string name="sms_verify">Verify SMS</string>
+    <string name="phone_number">Phone number</string>
+    <string name="valid_sms">Enter the valid code</string>
+    <string name="valid_phone">Enter the valid phone number</string>
+    <string name="enter_phone">Enter the phone number</string>
+    <string name="back">Back</string>
+    <string name="send_verify_btn">Send verify SMS</string>
+    <string name="send_verify_again_btn">Send the verification SMS again</string>
+    <string name="username_exist">Username exists already</string>
+    <string name="pw_req_title">Password requirements :</string>
+    <string name="pw_req1">•Uppercase letters</string>
+    <string name="pw_req2">•Lowercase letters</string>
+    <string name="pw_req3">•Special characters</string>
+    <string name="pw_req4">•Numberaic characters</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="valid_username">The minimum size of username must be more or equale then 8 chars ( >= 8)</string>
+    <string name="phone_exists">User with this phone number already exists</string>
+    <string name="wrong_login">Wrong username or password</string>
+</resources>

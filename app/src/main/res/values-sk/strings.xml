@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Skov</string>
+    <string name="log_in">Prihlásiť sa</string>
+    <string name="registration">Registrácia</string>
+    <string name="user_name">Používateľ</string>
+    <string name="log_out">Odhlásiť sa</string>
+    <string name="password">Heslo</string>
+    <string name="sign_up">Prihlásiť sa</string>
+    <string name="next_step">Next</string>
+    <string name="sms_verify">Overte SMS</string>
+    <string name="phone_number">Telefónne číslo</string>
+    <string name="valid_sms">Zadajte platný kód</string>
+    <string name="valid_phone">Zadajte platné telefónne číslo</string>
+    <string name="enter_phone">Zadajte telefónne číslo</string>
+    <string name="back">Späť</string>
+    <string name="send_verify_btn">Odoslať overovaciu SMS</string>
+    <string name="send_verify_again_btn">Pošlite znova overovaciu SMS</string>
+    <string name="username_exist">Používateľské meno už existuje</string>
+    <string name="pw_req_title">Požiadavky na heslo :</string>
+    <string name="pw_req1">•Veľké písmená</string>
+    <string name="pw_req2">•Malé písmená</string>
+    <string name="pw_req3">•Špeciálne znaky</string>
+    <string name="pw_req4">•Číselné znaky</string>
+    <string name="date_of_birth">Dátum narodenia</string>
+    <string name="name">Meno</string>
+    <string name="surname">Priezvisko</string>
+    <string name="valid_username">Minimálna veľkosť používateľského mena musí byť väčšia alebo rovná 8 znakom (>= 8)</string>
+    <string name="phone_exists">Používateľ s týmto telefónnym číslom už existuje</string>
+    <string name="wrong_login">Nesprávne uživateľské meno alebo heslo</string>
+</resources>
