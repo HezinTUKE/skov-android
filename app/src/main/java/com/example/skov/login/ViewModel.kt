@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.skov.network.SkovService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,7 +13,8 @@ import retrofit2.Response
 
 class ViewModelLogin : ViewModel() {
 
-    val loginResponse = MutableLiveData<LoginResponse>()
+    private val loginResponse = MutableStateFlow<LoginResponse?>(LoginResponse(0))
+    val response = loginResponse.asStateFlow()
 
     fun loginUser(
         login : String,

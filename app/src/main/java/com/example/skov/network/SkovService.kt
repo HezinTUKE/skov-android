@@ -1,5 +1,6 @@
 package com.example.skov.network
 
+import com.example.skov.list.Items
 import com.example.skov.login.LoginResponse
 import com.example.skov.registration.PasswordStep.Models
 import com.example.skov.registration.PhoneStep.PhoneResponse
@@ -11,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -86,4 +88,11 @@ interface SkovService {
 
     @POST("logout")
     fun logout()
+
+    /**
+     list module
+     **/
+
+    @GET("items/list")
+    fun getList() : Call<Items?>
 }

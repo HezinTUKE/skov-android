@@ -13,8 +13,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,6 +42,38 @@ fun LoginView(
     onList : () -> Unit,
     viewModel : ViewModelLogin = viewModel()
 ){
+
+    val loginObserver = viewModel.response.collectAsState()
+
+    var showPassword by remember {
+        mutableStateOf(false)
+    }
+
+    val scope = rememberCoroutineScope()
+
+    var errorList by remember {
+        mutableStateOf(mutableListOf<String>())
+    }
+
+    var username by remember {
+        mutableStateOf("")
+    }
+
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    if (loginObserver.value?.code == -1) {
+        errorList = mutableListOf(stringResource(R.string.wrong_login))
+    }
+
+    LaunchedEffect(key1 = loginObserver.value?.code){
+        if (loginObserver.value?.code == 1) {
+            errorList.clear()
+            onList()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,33 +81,6 @@ fun LoginView(
         verticalArrangement = Arrangement.spacedBy(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        val loginObserver = viewModel.loginResponse.observeAsState()
-
-        var showPassword by remember {
-            mutableStateOf(false)
-        }
-
-        val scope = rememberCoroutineScope()
-
-        var errorList by remember {
-            mutableStateOf(mutableListOf<String>())
-        }
-
-        var username by remember {
-            mutableStateOf("")
-        }
-
-        var password by remember {
-            mutableStateOf("")
-        }
-
-        if(loginObserver.value?.code == 1){
-            errorList.clear()
-            onList()
-        }else if(loginObserver.value?.code == -1){
-            errorList = mutableListOf(stringResource(R.string.wrong_login))
-        }
 
         Text(
             text = stringResource(R.string.app_name),
