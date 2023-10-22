@@ -56,11 +56,11 @@ fun LoginView(
     }
 
     var username by remember {
-        mutableStateOf("")
+        mutableStateOf("vova_hezin")
     }
 
     var password by remember {
-        mutableStateOf("")
+        mutableStateOf("n=MAUcy3")
     }
 
     if (loginObserver.value?.code == -1) {
