@@ -95,4 +95,13 @@ interface SkovService {
 
     @GET("items/list")
     fun getList() : Call<Items?>
+
+    /**
+     item view
+     */
+
+    @GET("items/item")
+    fun getItem(
+      @Part id : MultipartBody.Part
+    )
 }

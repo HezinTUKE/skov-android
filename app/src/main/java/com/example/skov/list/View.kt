@@ -14,11 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.skov.list.success_part.SuccessWindow
 
 @Composable
 fun ListView(
     viewModelItems: ItemsViewModel = viewModel(),
+    navHost : NavHostController
 ) {
     val responseResult by viewModelItems.state.collectAsState()
 
@@ -38,7 +40,7 @@ fun ListView(
                 )
             }
         is Success -> {
-            SuccessWindow(responseResult.list!!)
+            SuccessWindow(responseResult.list!!,navHost)
         }
 
         is Error -> {

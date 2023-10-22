@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.skov.list.ItemModel
@@ -33,7 +34,8 @@ import com.example.skov.utils.ImagePreview
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Item(
-    item : ItemModel
+    item : ItemModel,
+    navHost : NavHostController
 ){
     var url = "http://10.0.2.2:8000/media/";
 
@@ -43,6 +45,7 @@ fun Item(
             .combinedClickable(
                 onClick = {
                     Log.d("IDITEM", item.id.toString())
+                    navHost.navigate("item?id=${item.id}")
                 }
             ),
         border = BorderStroke(0.dp, Color.Transparent),

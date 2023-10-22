@@ -10,11 +10,13 @@ import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.skov.list.Items
 
 @Composable
 fun SuccessWindow(
-    list : Items
+    list : Items,
+    navHost : NavHostController
 ) {
     Box(
         modifier = Modifier
@@ -30,7 +32,7 @@ fun SuccessWindow(
             content = {
 
                 itemsIndexed(list.items) { _, item ->
-                    Item(item = item)
+                    Item(item = item, navHost)
                 }
             }
         )
