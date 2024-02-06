@@ -24,6 +24,8 @@ class ViewModelPhone : ViewModel(){
                 call: Call<PhoneResponse?>,
                 response: Response<PhoneResponse?>
             ) {
+                Log.d("PhoneStep", "PhoneStep")
+
                 phoneResponse.value = response.body()
                 Log.d("ResponsePhone", phoneResponse.value.toString())
             }

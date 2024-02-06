@@ -1,5 +1,7 @@
 package com.example.skov.network
 
+import com.example.skov.item.ItemResponseModel
+import com.example.skov.like.LikeModel
 import com.example.skov.list.Items
 import com.example.skov.login.LoginResponse
 import com.example.skov.registration.PasswordStep.Models
@@ -13,21 +15,28 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
+
 
 interface SkovService {
     companion object {
         private var retrofitService: SkovService? = null
         fun getInstance() : SkovService {
             if (retrofitService == null) {
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
                 val client = OkHttpClient
                     .Builder()
-                    .addInterceptor(
-                        HttpLoggingInterceptor()
-                            .setLevel(HttpLoggingInterceptor.Level.BODY)
-                    )
+                    .addNetworkInterceptor(interceptor)
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
                     .build()
                 val retrofit = Retrofit.Builder()
                     .baseUrl("http://10.0.2.2:8000/")
@@ -36,6 +45,7 @@ interface SkovService {
                     .build()
                 retrofitService = retrofit.create(SkovService::class.java)
             }
+
             return retrofitService!!
         }
     }
@@ -43,7 +53,6 @@ interface SkovService {
     /**
      registration module
     **/
-
     @Multipart
     @POST("registration/phone")
     fun sendPhone(
@@ -80,7 +89,7 @@ interface SkovService {
      **/
 
     @Multipart
-    @POST("login")
+    @POST("authorize")
     fun login(
         @Part login : MultipartBody.Part,
         @Part password : MultipartBody.Part
@@ -93,15 +102,25 @@ interface SkovService {
      list module
      **/
 
-    @GET("items/list")
-    fun getList() : Call<Items?>
 
+    @GET("items/list")
+    fun getList(
+        @Header("Authorization") token: String,
+    ) : Call<Items?>
+//    @Header("Authorization") token: String?
     /**
      item view
      */
 
     @GET("items/item")
     fun getItem(
-      @Part id : MultipartBody.Part
-    )
+      @Query("id") id : Int
+    ) : Call<ItemResponseModel>
+
+    @Multipart
+    @POST("items/like")
+    fun postLike(
+        @Part id : MultipartBody.Part,
+        @Part like : MultipartBody.Part
+    ) : Call<LikeModel>
 }

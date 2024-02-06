@@ -1,6 +1,5 @@
-package com.example.skov.utils
+package com.example.skov.utils.pagers
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -15,14 +14,14 @@ import coil.request.ImageRequest
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ImagePreview(
+fun ImagePagerPreview(
     imageList : List<String>
 ){
     val pagerState = rememberPagerState( pageCount = {
         imageList.size
     })
 
-    var urlMedia = "http://10.0.2.2:8000/media/";
+    val urlMedia = "http://10.0.2.2:8000/media/";
 
     HorizontalPager(
         state = pagerState,

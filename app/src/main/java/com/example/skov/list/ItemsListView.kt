@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.skov.list.success_part.SuccessWindow
+import com.example.skov.state.*
 
 @Composable
 fun ListView(
@@ -40,7 +41,7 @@ fun ListView(
                 )
             }
         is Success -> {
-            SuccessWindow(responseResult.list!!,navHost)
+            SuccessWindow(responseResult.state!!,navHost)
         }
 
         is Error -> {
@@ -51,6 +52,9 @@ fun ListView(
             ) {
                 Text(text = "Error")
             }
+        }
+        is IsNotAuthenticated -> {
+            navHost.navigate("login")
         }
     }
 }

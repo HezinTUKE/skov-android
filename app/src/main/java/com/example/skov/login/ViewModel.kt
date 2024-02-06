@@ -12,8 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ViewModelLogin : ViewModel() {
-
-    private val loginResponse = MutableStateFlow<LoginResponse?>(LoginResponse(0))
+    private val loginResponse = MutableStateFlow<LoginResponse?>(LoginResponse("", 0))
     val response = loginResponse.asStateFlow()
 
     fun loginUser(
@@ -23,6 +22,7 @@ class ViewModelLogin : ViewModel() {
 
         val loginPart = MultipartBody.Part.createFormData("username", login)
         val passwordPart = MultipartBody.Part.createFormData("password", password)
+
 
         val res = SkovService.getInstance().login(
             loginPart,
@@ -34,6 +34,8 @@ class ViewModelLogin : ViewModel() {
                 call: Call<LoginResponse?>,
                 response: Response<LoginResponse?>
             ) {
+                Log.d("LOGIN_R", "HERE")
+
                 loginResponse.value = response.body()
 
                 Log.d("LoginResponse", loginResponse.value.toString())
