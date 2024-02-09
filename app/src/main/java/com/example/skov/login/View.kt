@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import com.example.skov.R
 import com.example.skov.ui.theme.fontFamilyDance
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.skov.SessionManager
 import com.example.skov.utils.ErrorCard
 import kotlinx.coroutines.launch
 
@@ -46,6 +45,7 @@ fun LoginView(
 ){
 
     val loginObserver = viewModel.response.collectAsState()
+    val context = LocalContext.current
 
     var showPassword by remember {
         mutableStateOf(false)
@@ -72,6 +72,11 @@ fun LoginView(
     LaunchedEffect(key1 = loginObserver.value?.code){
         if (loginObserver.value?.code == 1) {
             errorList.clear()
+            val token = loginObserver.value?.token
+
+            if(token!!.isNotEmpty()) {
+                UserSession.saveToken(context, token)
+            }
             onList()
         }
     }

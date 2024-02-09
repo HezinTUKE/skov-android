@@ -18,7 +18,6 @@ import com.example.skov.item.state.Error
 import com.example.skov.item.state.Loading
 import com.example.skov.item.state.Success
 import com.example.skov.item.success.SuccessView
-import com.example.skov.list.state.IsNotAuthenticated
 
 @Composable
 fun ItemView(

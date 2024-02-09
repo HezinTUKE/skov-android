@@ -89,4 +89,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 }
