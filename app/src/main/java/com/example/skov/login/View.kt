@@ -1,5 +1,6 @@
 package com.example.skov.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -76,8 +77,11 @@ fun LoginView(
 
             if(token!!.isNotEmpty()) {
                 UserSession.saveToken(context, token)
+                Log.d("Logged In", "HERE")
+
+                onList()
             }
-            onList()
+
         }
     }
 

@@ -24,17 +24,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.skov.login.UserSession
 import com.example.skov.navigation.NavigationView
 import com.example.skov.ui.theme.SKOVTheme
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -57,15 +62,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             SKOVTheme {
                 val navController = rememberNavController()
+                val context = LocalContext.current
+
                 var showBottomBar by remember {
                     mutableStateOf(false)
+                }
+
+                LaunchedEffect(key1 = showBottomBar ) {
+                    showBottomBar = UserSession.getAccessToken(context).first().isNotEmpty()
                 }
 
                 Scaffold (
                     bottomBar = {
                         if(showBottomBar) {
                             BottomAppBar(
-
                                 actions = {
                                     IconButton(onClick = { /* do something */ }) {
                                         Image(
@@ -120,10 +130,6 @@ class MainActivity : ComponentActivity() {
                         .padding(it)
                     ) {
                         NavigationView(controller = navController)
-
-                        val currentRoute = navController.currentBackStackEntry?.destination?.route
-                        Log.d("CurrRoute", currentRoute.toString());
-                        showBottomBar = (currentRoute != "login")
                     }
                 }
                 // A surface container using the 'background' color from the theme

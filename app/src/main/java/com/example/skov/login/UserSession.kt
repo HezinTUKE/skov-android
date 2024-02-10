@@ -20,6 +20,7 @@ object UserSession{
     suspend fun saveToken(context : Context, token: String) {
         context.dataStore.edit {
             it[USER_TOKEN_KEY] = token
+//            it.clear()
         }
     }
 }

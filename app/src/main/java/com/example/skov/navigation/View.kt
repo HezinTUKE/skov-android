@@ -16,7 +16,7 @@ import com.example.skov.registration.RegistrationView
 fun NavigationView(
     controller : NavHostController
 ){
-    NavHost(navController = controller, startDestination = "items"){
+    NavHost(navController = controller, startDestination = "login"){
         composable("login"){
             LoginView(
                 onRegistration = {controller.navigate("registration")},
