@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.skov.AppBar.CommonAppBar
 import com.example.skov.item.ItemView
 import com.example.skov.list.ListView
 import com.example.skov.login.LoginView
@@ -16,7 +17,7 @@ import com.example.skov.registration.RegistrationView
 fun NavigationView(
     controller : NavHostController
 ){
-    NavHost(navController = controller, startDestination = "login"){
+    NavHost(navController = controller, startDestination = "items"){
         composable("login"){
             LoginView(
                 onRegistration = {controller.navigate("registration")},
@@ -29,10 +30,12 @@ fun NavigationView(
             )
         }
         composable("items"){
-            ListView(
+            CommonAppBar {
+                ListView(
 //                onItem = {controller.navigate("item?id=$id")},
-                navHost = controller
-            )
+                    navHost = controller
+                )
+            }
         }
         composable(
             route = "item?id={id}",

@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import com.example.skov.R
 import com.example.skov.ui.theme.fontFamilyDance
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.skov.MainActivityViewModel
 import com.example.skov.utils.ErrorCard
 import kotlinx.coroutines.launch
 
@@ -44,7 +43,6 @@ fun LoginView(
     onRegistration : () -> Unit,
     onList : () -> Unit,
     viewModel : ViewModelLogin = viewModel(),
-    viewModelMain : MainActivityViewModel = viewModel()
 ){
 
     val loginObserver = viewModel.response.collectAsState()
@@ -80,7 +78,6 @@ fun LoginView(
             if(token!!.isNotEmpty()) {
                 UserSession.saveToken(context, token)
                 Log.d("Logged In", "HERE")
-                viewModelMain.checkShowBottomBar(context)
                 onList()
             }
 

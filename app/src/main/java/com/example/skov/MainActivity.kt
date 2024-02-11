@@ -2,11 +2,13 @@ package com.example.skov
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.skov.navigation.NavigationView
 import com.example.skov.ui.theme.SKOVTheme
 import java.util.Locale
 
@@ -29,9 +31,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             SKOVTheme {
                 val navController = rememberNavController()
-                val context = LocalContext.current
 
-                MainActivityView(navController = navController)
+                Surface(modifier = Modifier
+                    .fillMaxSize()
+                ) {
+                    NavigationView(controller = navController)
+                }
             }
         }
     }

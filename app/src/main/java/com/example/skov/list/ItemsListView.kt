@@ -19,7 +19,6 @@ import androidx.navigation.NavHostController
 import com.example.skov.list.success_part.SuccessWindow
 import com.example.skov.login.UserSession
 import com.example.skov.state.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 @Composable
