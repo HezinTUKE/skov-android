@@ -18,32 +18,32 @@ import com.example.skov.registration.RegistrationView
 fun NavigationView(
     controller : NavHostController
 ){
-    NavHost(navController = controller, startDestination = "items"){
-        composable("login"){
+    NavHost(navController = controller, startDestination = Routes.LIST.route){
+        composable(Routes.LOGIN.route){
             LoginView(
-                onRegistration = {controller.navigate("registration")},
-                onList = {controller.navigate("items")}
+                onRegistration = {controller.navigate(Routes.REGISTRATION.route)},
+                onList = {controller.navigate(Routes.LIST.route)}
             )
         }
-        composable("registration"){
+        composable(Routes.REGISTRATION.route){
             RegistrationView(
-                onLogin = {controller.navigate("login")}
+                onLogin = {controller.navigate(Routes.LOGIN.route)}
             )
         }
-        composable("items"){
+        composable(Routes.LIST.route){
             CommonAppBar(controller) {
                 ListView(
                     navHost = controller
                 )
             }
         }
-        composable("create_item"){
+        composable(Routes.LIST.route){
             CommonAppBar(controller) {
                 ItemCreateView()
             }
         }
         composable(
-            route = "item?id={id}",
+            route = "${Routes.LIST.route}?id={id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
