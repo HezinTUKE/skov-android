@@ -20,13 +20,14 @@ import com.example.skov.R
 
 @Composable
 fun CommonAppBar(
+    navHost : NavHostController,
     screen : @Composable() () -> Unit
 ){
     Scaffold (
         bottomBar = {
             BottomAppBar(
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navHost.navigate("items") }) {
                         Image(
                             painter = painterResource(id = R.drawable.laptop),
                             modifier = Modifier.size(25.dp),
@@ -58,7 +59,7 @@ fun CommonAppBar(
 
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = { /* do something */ },
+                        onClick = { navHost.navigate("create_item") },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {

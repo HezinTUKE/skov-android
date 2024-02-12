@@ -72,7 +72,6 @@ fun RegistrationView(
         })
 
         Scaffold (
-
             topBar = {
                 TopAppBar(
                     title = { Text("Registration", fontFamily = fontFamilyQuicksand) },
@@ -86,7 +85,6 @@ fun RegistrationView(
             },
 
             content = {
-
                 Column(
                     modifier = Modifier.padding(
                         top = it.calculateTopPadding() + 30.dp,

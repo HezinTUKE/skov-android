@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.skov.AppBar.CommonAppBar
 import com.example.skov.item.ItemView
+import com.example.skov.item_create.ItemCreateView
 import com.example.skov.list.ListView
 import com.example.skov.login.LoginView
 import com.example.skov.registration.RegistrationView
@@ -30,11 +31,15 @@ fun NavigationView(
             )
         }
         composable("items"){
-            CommonAppBar {
+            CommonAppBar(controller) {
                 ListView(
-//                onItem = {controller.navigate("item?id=$id")},
                     navHost = controller
                 )
+            }
+        }
+        composable("create_item"){
+            CommonAppBar(controller) {
+                ItemCreateView()
             }
         }
         composable(
@@ -45,7 +50,9 @@ fun NavigationView(
         ){
             val uId = it.arguments?.getInt("id")
             Log.d("UID_", uId.toString())
-            ItemView(id = uId!!)
+            CommonAppBar(controller) {
+                ItemView(id = uId!!)
+            }
         }
     }
 }
