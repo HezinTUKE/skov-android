@@ -37,13 +37,13 @@ fun NavigationView(
                 )
             }
         }
-        composable(Routes.LIST.route){
+        composable(Routes.ITEM.route){
             CommonAppBar(controller) {
                 ItemCreateView()
             }
         }
         composable(
-            route = "${Routes.LIST.route}?id={id}",
+            route = "${Routes.ITEM.route}?id={id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
