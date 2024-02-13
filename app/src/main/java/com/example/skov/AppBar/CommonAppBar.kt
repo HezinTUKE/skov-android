@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.skov.R
+import com.example.skov.navigation.Routes
 
 @Composable
 fun CommonAppBar(
@@ -27,7 +28,7 @@ fun CommonAppBar(
         bottomBar = {
             BottomAppBar(
                 actions = {
-                    IconButton(onClick = { navHost.navigate("items") }) {
+                    IconButton(onClick = { navHost.navigate(Routes.LIST.route) }) {
                         Image(
                             painter = painterResource(id = R.drawable.laptop),
                             modifier = Modifier.size(25.dp),
@@ -59,7 +60,7 @@ fun CommonAppBar(
 
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = { navHost.navigate("create_item") },
+                        onClick = { navHost.navigate(Routes.ITEM_CREATE.route) },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {

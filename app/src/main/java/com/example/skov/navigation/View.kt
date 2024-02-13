@@ -37,7 +37,7 @@ fun NavigationView(
                 )
             }
         }
-        composable(Routes.ITEM.route){
+        composable(Routes.ITEM_CREATE.route){
             CommonAppBar(controller) {
                 ItemCreateView()
             }
