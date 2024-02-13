@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.skov.item_create.StepOne.StepOne
+import com.example.skov.item_create.StepTwo.StepTwo
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -22,7 +23,12 @@ fun ItemCreateView(){
     val description = remember {
         mutableStateOf("")
     }
-
+    val category = remember {
+        mutableStateOf(-1)
+    }
+    val subcategory = remember {
+        mutableStateOf(-1)
+    }
     val pagerState = rememberPagerState(pageCount = {
         3
     })
@@ -43,7 +49,7 @@ fun ItemCreateView(){
                 }
 
                 1 -> {
-
+                    StepTwo(category = category, subcategory = subcategory)
                 }
 
                 2 -> {
