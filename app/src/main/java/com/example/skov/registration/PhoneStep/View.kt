@@ -82,7 +82,6 @@ fun PhonePage(
     }
 
     if(respSMS.value?.code == 1){
-        Log.d("SMSVerify", respSMS.toString())
         errorList.clear()
 
         scope.launch {

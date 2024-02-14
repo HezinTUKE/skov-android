@@ -1,6 +1,5 @@
 package com.example.skov.list
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,8 +21,6 @@ class ItemsViewModel : ViewModel(){
     fun getList(
         token : String
     ){
-        Log.d("TokenS", token)
-
         val res = SkovService.getInstance().getList(
             "Token $token",
         )

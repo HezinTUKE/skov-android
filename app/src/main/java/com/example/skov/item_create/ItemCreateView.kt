@@ -45,11 +45,11 @@ fun ItemCreateView(){
         ) { page ->
             when(page) {
                 0 -> {
-                    StepOne(name = name, description = description)
+                    StepOne(name = name, description = description, pager = pagerState)
                 }
 
                 1 -> {
-                    StepTwo(category = category, subcategory = subcategory)
+                    StepTwo(category = category, subcategory = subcategory, pager = pagerState)
                 }
 
                 2 -> {

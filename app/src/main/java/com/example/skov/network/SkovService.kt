@@ -1,6 +1,7 @@
 package com.example.skov.network
 
 import com.example.skov.item.ItemResponseModel
+import com.example.skov.item_create.ListCategory
 import com.example.skov.like.LikeModel
 import com.example.skov.list.Items
 import com.example.skov.login.LoginResponse
@@ -21,7 +22,6 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
-
 
 interface SkovService {
     companion object {
@@ -84,6 +84,8 @@ interface SkovService {
         @Part password: MultipartBody.Part
     ) : Call<UserResponse?>
 
+
+
     /**
     login/logout module
      **/
@@ -123,4 +125,7 @@ interface SkovService {
         @Part id : MultipartBody.Part,
         @Part like : MultipartBody.Part
     ) : Call<LikeModel>
+
+    @GET("items/category")
+    fun getCategory() : Call<ListCategory>
 }
