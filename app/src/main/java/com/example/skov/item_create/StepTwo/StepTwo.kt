@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,30 +40,33 @@ fun StepTwo(
     subcategory : MutableState<Int>,
     pager : PagerState,
     viewModelCategory : CategoryViewModel = viewModel()
-){
+) {
     val categoryObserver by viewModelCategory.categoryObserver.collectAsState()
 
     val categoryList = remember {
         mutableListOf("")
     }
 
-    LaunchedEffect( true ){
+    LaunchedEffect(true) {
         viewModelCategory.readCategory()
         Log.d("Categorys", categoryObserver.toString())
     }
 
-    if( categoryObserver is Success) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+    Box(
+        Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+
+
+        if (categoryObserver is Success) {
+
+//            Text(text = "Typ tovaru", color = Color(0, 0, 0))
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(3),
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalItemSpacing = 16.dp,
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-
                 content = {
                     itemsIndexed(categoryObserver.state!!.categorys) { _, categ ->
                         OutlinedButton(
@@ -70,18 +74,18 @@ fun StepTwo(
                                 category.value = categ.id
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if(category.value == categ.id) {
+                                containerColor = if (category.value == categ.id) {
                                     Color.Black
-                                }else{
+                                } else {
                                     Color.White
                                 }
                             )
                         ) {
                             Text(
                                 text = categ.name,
-                                color = if(category.value == categ.id) {
+                                color = if (category.value == categ.id) {
                                     Color.White
-                                }else{
+                                } else {
                                     Color.Black
                                 }
                             )
@@ -91,4 +95,5 @@ fun StepTwo(
             )
         }
     }
+
 }
