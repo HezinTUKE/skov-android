@@ -59,40 +59,7 @@ fun StepTwo(
 
 
         if (categoryObserver is Success) {
-
-//            Text(text = "Typ tovaru", color = Color(0, 0, 0))
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalItemSpacing = 16.dp,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                content = {
-                    itemsIndexed(categoryObserver.state!!.categorys) { _, categ ->
-                        OutlinedButton(
-                            onClick = {
-                                category.value = categ.id
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (category.value == categ.id) {
-                                    Color.Black
-                                } else {
-                                    Color.White
-                                }
-                            )
-                        ) {
-                            Text(
-                                text = categ.name,
-                                color = if (category.value == categ.id) {
-                                    Color.White
-                                } else {
-                                    Color.Black
-                                }
-                            )
-                        }
-                    }
-                }
-            )
+            CategorysView(category = category, categorys = categoryObserver.state!!.categorys)
         }
     }
 
