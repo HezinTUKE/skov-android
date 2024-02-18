@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.skov.item_create.StepOne.StepOneCreateItem
+import com.example.skov.item_create.StepThree.StepThreeCreateItem
 import com.example.skov.item_create.StepTwo.StepTwoCreateItem
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,8 +39,6 @@ fun ItemCreateView(){
         modifier = Modifier
             .fillMaxSize(),
         contentAlignment = Alignment.Center
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HorizontalPager(
             userScrollEnabled = false,
@@ -47,15 +46,27 @@ fun ItemCreateView(){
         ) { page ->
             when(page) {
                 0 -> {
-                    StepOneCreateItem(name = name, description = description, pager = pagerState)
+                    StepOneCreateItem(
+                        name = name,
+                        description = description,
+                        pager = pagerState
+                    )
                 }
 
                 1 -> {
-                    StepTwoCreateItem(category = category, subcategory = subcategory, pager = pagerState)
+                    StepTwoCreateItem(
+                        category = category,
+                        subcategory = subcategory,
+                        pager = pagerState
+                    )
                 }
 
                 2 -> {
-
+                    StepThreeCreateItem(
+                        category = category.value,
+                        subcategory = subcategory,
+                        pager = pagerState
+                    )
                 }
             }
         }

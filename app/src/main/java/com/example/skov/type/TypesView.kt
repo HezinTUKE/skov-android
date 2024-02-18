@@ -1,10 +1,11 @@
-package com.example.skov.item_create.StepTwo
+package com.example.skov.type
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
@@ -19,14 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.skov.item_create.TypeModels.Type
+import com.example.skov.type.TypeModels.Type
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CategorysView(
-    category : MutableState<Int>,
-    categorys : List<Type>,
+    type : MutableState<Int>,
+    types : List<Type>,
     pager : PagerState
 ) {
    val coroutine = rememberCoroutineScope()
@@ -42,13 +43,13 @@ fun CategorysView(
             verticalItemSpacing = 16.dp,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             content = {
-                itemsIndexed(categorys) { _, categ ->
+                itemsIndexed(types) { _, categ ->
                     OutlinedButton(
                         onClick = {
-                            category.value = categ.id
+                            type.value = categ.id
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (category.value == categ.id) {
+                            containerColor = if (type.value == categ.id) {
                                 Color.Black
                             } else {
                                 Color.White
@@ -57,7 +58,7 @@ fun CategorysView(
                     ) {
                         Text(
                             text = categ.name,
-                            color = if (category.value == categ.id) {
+                            color = if (type.value == categ.id) {
                                 Color.White
                             } else {
                                 Color.Black
@@ -68,11 +69,14 @@ fun CategorysView(
             }
         )
 
-        OutlinedButton(onClick = {
-            coroutine.launch {
-                pager.scrollToPage(pager.currentPage + 1)
+        OutlinedButton(
+            modifier = Modifier.padding(top = 30.dp),
+            onClick = {
+                coroutine.launch {
+                    pager.scrollToPage(pager.currentPage + 1)
+                }
             }
-        }) {
+        ) {
             Text(text = "Ok")
         }
 

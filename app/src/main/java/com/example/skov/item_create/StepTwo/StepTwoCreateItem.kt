@@ -10,11 +10,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.example.skov.item_create.CategoryViewModel
+import com.example.skov.type.TypeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skov.LoadingView
 import com.example.skov.state.Loading
 import com.example.skov.state.Success
+import com.example.skov.type.CategorysView
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -22,7 +23,7 @@ fun StepTwoCreateItem(
     category : MutableState<Int>,
     subcategory : MutableState<Int>,
     pager : PagerState,
-    viewModelCategory : CategoryViewModel = viewModel()
+    viewModelCategory : TypeViewModel = viewModel()
 ) {
     val categoryObserver by viewModelCategory.categoryObserver.collectAsState()
 
@@ -36,7 +37,7 @@ fun StepTwoCreateItem(
     }
 
     when(categoryObserver ) {
-        is Success -> CategorysView(category = category, categorys = categoryObserver.state!!.categorys)
+        is Success -> CategorysView(type = category, types = categoryObserver.state!!.categorys, pager)
         is Error -> Text(text = "Nastala chyba")
         is Loading -> LoadingView()
         else -> {}
