@@ -5,5 +5,5 @@ enum class Routes(val route : String) {
     LOGIN("login"),
     REGISTRATION("registration"),
     ITEM("item"),
-    ITEM_CREATE("create_item")
+    ITEM_CREATE("create_item"),
 }

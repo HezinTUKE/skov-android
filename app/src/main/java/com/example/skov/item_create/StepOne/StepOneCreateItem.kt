@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StepOne(
+fun StepOneCreateItem(
     name : MutableState<String>,
     pager : PagerState,
     description : MutableState<String>

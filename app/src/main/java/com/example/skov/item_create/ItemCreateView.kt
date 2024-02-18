@@ -2,6 +2,7 @@ package com.example.skov.item_create
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -11,8 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.skov.item_create.StepOne.StepOne
-import com.example.skov.item_create.StepTwo.StepTwo
+import com.example.skov.item_create.StepOne.StepOneCreateItem
+import com.example.skov.item_create.StepTwo.StepTwoCreateItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -33,11 +34,12 @@ fun ItemCreateView(){
         3
     })
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HorizontalPager(
             userScrollEnabled = false,
@@ -45,11 +47,11 @@ fun ItemCreateView(){
         ) { page ->
             when(page) {
                 0 -> {
-                    StepOne(name = name, description = description, pager = pagerState)
+                    StepOneCreateItem(name = name, description = description, pager = pagerState)
                 }
 
                 1 -> {
-                    StepTwo(category = category, subcategory = subcategory, pager = pagerState)
+                    StepTwoCreateItem(category = category, subcategory = subcategory, pager = pagerState)
                 }
 
                 2 -> {

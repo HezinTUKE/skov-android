@@ -104,7 +104,6 @@ interface SkovService {
      list module
      **/
 
-
     @GET("items/list")
     fun getList(
         @Header("Authorization") token: String,
@@ -128,4 +127,7 @@ interface SkovService {
 
     @GET("items/category")
     fun getCategory() : Call<ListCategory>
+
+    @GET("items/subcategory")
+    fun getSubCategory() : Call<ListCategory>
 }
