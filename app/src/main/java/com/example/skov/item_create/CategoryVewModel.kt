@@ -1,6 +1,7 @@
 package com.example.skov.item_create
 
 import androidx.lifecycle.ViewModel
+import com.example.skov.item_create.TypeModels.ListCategory
 import com.example.skov.network.SkovService
 import com.example.skov.state.*
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,7 +1,8 @@
 package com.example.skov.network
 
 import com.example.skov.item.ItemResponseModel
-import com.example.skov.item_create.ListCategory
+import com.example.skov.item_create.TypeModels.ListCategory
+import com.example.skov.item_create.TypeModels.ListSubCategory
 import com.example.skov.like.LikeModel
 import com.example.skov.list.Items
 import com.example.skov.login.LoginResponse
@@ -129,5 +130,5 @@ interface SkovService {
     fun getCategory() : Call<ListCategory>
 
     @GET("items/subcategory")
-    fun getSubCategory() : Call<ListCategory>
+    fun getSubCategory() : Call<ListSubCategory>
 }

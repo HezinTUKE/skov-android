@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.skov.item_create.Type
+import com.example.skov.item_create.TypeModels.Type
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
