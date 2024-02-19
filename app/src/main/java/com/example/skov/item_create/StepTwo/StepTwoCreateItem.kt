@@ -21,15 +21,10 @@ import com.example.skov.type.CategorysView
 @Composable
 fun StepTwoCreateItem(
     category : MutableState<Int>,
-    subcategory : MutableState<Int>,
     pager : PagerState,
     viewModelCategory : TypeViewModel = viewModel()
 ) {
     val categoryObserver by viewModelCategory.categoryObserver.collectAsState()
-
-    val categoryList = remember {
-        mutableListOf("")
-    }
 
     LaunchedEffect(true) {
         viewModelCategory.readCategory()
@@ -37,7 +32,11 @@ fun StepTwoCreateItem(
     }
 
     when(categoryObserver ) {
-        is Success -> CategorysView(type = category, types = categoryObserver.state!!.categorys, pager)
+        is Success -> CategorysView(
+            type = category,
+            types = categoryObserver.state!!.categorys,
+            pager = pager,
+            txtHeader = "Category")
         is Error -> Text(text = "Nastala chyba")
         is Loading -> LoadingView()
         else -> {}

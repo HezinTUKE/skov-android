@@ -33,7 +33,8 @@ fun StepThreeCreateItem(
         is Success -> CategorysView(
             type = subcategory,
             types = subcategoryObserver.state!!.subcategorys,
-            pager = pager)
+            pager = pager,
+            txtHeader = "SubCategory")
         is Error -> Text(text = "Error")
         is Loading -> LoadingView()
         else -> {}

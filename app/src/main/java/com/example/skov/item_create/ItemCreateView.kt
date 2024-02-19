@@ -1,5 +1,6 @@
 package com.example.skov.item_create
 
+import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.skov.item_create.StepFour.StepFourView
 import com.example.skov.item_create.StepOne.StepOneCreateItem
 import com.example.skov.item_create.StepThree.StepThreeCreateItem
 import com.example.skov.item_create.StepTwo.StepTwoCreateItem
@@ -31,8 +33,13 @@ fun ItemCreateView(){
     val subcategory = remember {
         mutableStateOf(-1)
     }
+
+    val selectedImages = remember {
+        mutableStateOf<ArrayList<Uri?>>(arrayListOf())
+    }
+
     val pagerState = rememberPagerState(pageCount = {
-        3
+        4
     })
 
     Box(
@@ -56,7 +63,6 @@ fun ItemCreateView(){
                 1 -> {
                     StepTwoCreateItem(
                         category = category,
-                        subcategory = subcategory,
                         pager = pagerState
                     )
                 }
@@ -66,6 +72,12 @@ fun ItemCreateView(){
                         category = category.value,
                         subcategory = subcategory,
                         pager = pagerState
+                    )
+                }
+
+                3 -> {
+                    StepFourView(
+                        selectedImages = selectedImages
                     )
                 }
             }

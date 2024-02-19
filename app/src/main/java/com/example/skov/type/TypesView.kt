@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
@@ -28,7 +30,8 @@ import kotlinx.coroutines.launch
 fun CategorysView(
     type : MutableState<Int>,
     types : List<Type>,
-    pager : PagerState
+    pager : PagerState,
+    txtHeader : String
 ) {
    val coroutine = rememberCoroutineScope()
 
@@ -37,6 +40,11 @@ fun CategorysView(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            modifier = Modifier.height(55.dp),
+            text = txtHeader
+        )
+        
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
             contentPadding = PaddingValues(16.dp),
