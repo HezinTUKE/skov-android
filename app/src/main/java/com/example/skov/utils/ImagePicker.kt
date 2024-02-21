@@ -1,5 +1,6 @@
 package com.example.skov.utils
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -11,16 +12,19 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun ImagePickerView(
-    selectedImages : MutableState<ArrayList<Uri?>>,
-    list : @Composable() (ArrayList<Uri?>) -> Unit
+    selectedImages : MutableState<ArrayList<Uri?>>
 ){
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    var list_imgs by mutableStateOf<ArrayList<Uri?>>(arrayListOf())
+
+    Column {
 
         val pickMediaLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.PickMultipleVisualMedia(10),
@@ -28,12 +32,12 @@ fun ImagePickerView(
                 if (listUri.isNotEmpty()) {
 
                     listUri.forEach { uri ->
-                        if (!selectedImages.value.contains(uri)) {
-                            selectedImages.value.add(uri)
+                        if (!list_imgs.contains(uri)) {
+                            list_imgs.add(uri)
                         }
                     }
 
-                    Log.d("ListURI", selectedImages.value.size.toString())
+                    selectedImages.value = list_imgs
 
                 }
             }
@@ -48,8 +52,6 @@ fun ImagePickerView(
         }) {
             Text(text = "Select Images")
         }
-
-        list(selectedImages.value)
 
     }
 }
