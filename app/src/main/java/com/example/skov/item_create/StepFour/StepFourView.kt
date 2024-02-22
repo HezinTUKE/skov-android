@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.material3.Card
@@ -48,11 +49,15 @@ fun StepFourView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
             ImagePickerView(selectedImages = selectedImages)
 
-            LazyHorizontalStaggeredGrid(
-                rows = StaggeredGridCells.Fixed(3),
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(3),
                 content = {
                     itemsIndexed(selectedImages.value) { idx, uri ->
                         CheckImageView(uri = uri!!)
