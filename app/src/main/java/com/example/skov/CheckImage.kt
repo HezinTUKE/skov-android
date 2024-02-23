@@ -33,7 +33,6 @@ import coil.compose.AsyncImage
 
 @Composable
 fun CheckImageView(uri : Uri){
-
     var checked by remember {
         mutableStateOf(false)
     }
@@ -58,26 +57,25 @@ fun CheckImageView(uri : Uri){
                 contentDescription = null
             )
             Box(
-//                contentAlignment= Alignment.Center,
                 modifier = Modifier
-                    .size(35.dp)
                     .padding(5.dp)
                     .border(
                         width = 3.dp,
-                        color = Color(59, 148, 218, 255),
+                        color = Color.Black,
                         shape = CircleShape
                     ),
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Check,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(35.dp)
-                        .padding(5.dp)
-//                        .background(Color.Blue, CircleShape)
-                        .alpha(if (checked) 1f else 0f),
-                    tint = Color(59, 148, 218, 255)
-                )
+                if(checked) {
+                    Icon(
+                        imageVector = Icons.Outlined.Check,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(30.dp)
+                            .padding(5.dp)
+                            .background(Color.Black, CircleShape),
+                        tint = Color.Black
+                    )
+                }
             }
         }
     }

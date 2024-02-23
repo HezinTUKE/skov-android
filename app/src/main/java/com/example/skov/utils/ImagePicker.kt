@@ -2,6 +2,7 @@ package com.example.skov.utils
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,15 +28,14 @@ fun ImagePickerView(
             contract = ActivityResultContracts.PickMultipleVisualMedia(10),
             onResult = { listUri ->
                 if (listUri.isNotEmpty()) {
-
+                    Log.d("Images Length", selectedImages.value.size.toString())
                     listUri.forEach { uri ->
-                        if (!list_imgs.contains(uri)) {
+                        if (!selectedImages.value.contains(uri)) {
                             list_imgs.add(uri)
                         }
                     }
 
                     selectedImages.value = list_imgs
-
                 }
             }
         )

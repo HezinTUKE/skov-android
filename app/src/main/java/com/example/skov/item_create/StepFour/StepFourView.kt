@@ -6,21 +6,13 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,12 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.example.skov.CheckImageView
-import com.example.skov.R
 import com.example.skov.utils.ImagePickerView
 
 @SuppressLint("UnrememberedMutableState")
@@ -43,27 +31,32 @@ import com.example.skov.utils.ImagePickerView
 fun StepFourView(
     selectedImages : MutableState<ArrayList<Uri?>>
 ){
+    val list_imgs = mutableStateOf<ArrayList<Uri?>>(arrayListOf())
+
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            ImagePickerView(selectedImages = selectedImages)
+        ImagePickerView(selectedImages = list_imgs)
 
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(3),
-                content = {
-                    itemsIndexed(selectedImages.value) { idx, uri ->
-                        CheckImageView(uri = uri!!)
-                    }
+        Column(
+            modifier = Modifier
+                .padding(3.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 128.dp),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+                horizontalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                itemsIndexed(list_imgs.value) { idx, uri ->
+                    CheckImageView(uri!!)
                 }
-            )
+
+            }
         }
 
     }
