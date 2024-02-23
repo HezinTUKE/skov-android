@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -26,11 +28,14 @@ fun ImagePagerPreview(
     HorizontalPager(
         state = pagerState,
     ) {page ->
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data("${urlMedia}${imageList[page]}")
                 .crossfade(true)
                 .build(),
+            loading = {
+                CircularProgressIndicator()
+            },
             contentScale = ContentScale.Crop,
             contentDescription = null,
             modifier = Modifier

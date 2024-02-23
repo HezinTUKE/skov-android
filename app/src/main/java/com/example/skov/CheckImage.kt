@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 
 @Composable
 fun CheckImageView(uri : Uri){
@@ -51,9 +53,12 @@ fun CheckImageView(uri : Uri){
         Box(
             contentAlignment = Alignment.TopStart
         ) {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = uri,
+                loading = {
+                    CircularProgressIndicator()
+                },
                 contentDescription = null
             )
             Box(
