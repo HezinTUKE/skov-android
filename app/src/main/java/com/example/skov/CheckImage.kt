@@ -35,7 +35,10 @@ import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 
 @Composable
-fun CheckImageView(uri : Uri){
+fun CheckImageView(
+    uri : Uri,
+    removeList : MutableList<Uri?>
+){
     var checked by remember {
         mutableStateOf(false)
     }
@@ -45,6 +48,11 @@ fun CheckImageView(uri : Uri){
             .clickable(
                 onClick = {
                     checked = !checked
+                    if (checked){
+                        removeList.add(uri)
+                    }else{
+                        removeList.remove(uri)
+                    }
                 }
             ),
         elevation = CardDefaults.cardElevation(6.dp),
@@ -54,7 +62,6 @@ fun CheckImageView(uri : Uri){
             contentAlignment = Alignment.TopStart
         ) {
             SubcomposeAsyncImage(
-//                modifier = Modifier.fillMaxSize(),
                 model = uri,
                 loading = {
                     CircularProgressIndicator()

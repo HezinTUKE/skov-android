@@ -7,11 +7,19 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -40,14 +48,21 @@ fun ImagePickerView(
             }
         )
 
-        OutlinedButton(onClick = {
-            pickMediaLauncher.launch(
-                PickVisualMediaRequest(
-                    ActivityResultContracts.PickVisualMedia.ImageOnly
+        IconButton(
+            modifier = Modifier.size(35.dp),
+            onClick = {
+                pickMediaLauncher.launch(
+                    PickVisualMediaRequest(
+                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                    )
                 )
+            }
+        ) {
+            Icon(
+                modifier = Modifier.size(35.dp),
+                imageVector = Icons.Outlined.AddCircle,
+                contentDescription = null
             )
-        }) {
-            Text(text = "Select Images")
         }
 
     }
