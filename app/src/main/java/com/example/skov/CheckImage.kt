@@ -21,6 +21,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,7 +39,6 @@ fun CheckImageView(uri : Uri){
     var checked by remember {
         mutableStateOf(false)
     }
-
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +54,7 @@ fun CheckImageView(uri : Uri){
             contentAlignment = Alignment.TopStart
         ) {
             SubcomposeAsyncImage(
-                modifier = Modifier.fillMaxSize(),
+//                modifier = Modifier.fillMaxSize(),
                 model = uri,
                 loading = {
                     CircularProgressIndicator()

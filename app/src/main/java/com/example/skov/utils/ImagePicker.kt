@@ -10,17 +10,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 
-@SuppressLint("UnrememberedMutableState")
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun ImagePickerView(
-    selectedImages : MutableState<ArrayList<Uri?>>
+    selectedImages : MutableList<Uri?>
 ){
-    var list_imgs by mutableStateOf<ArrayList<Uri?>>(arrayListOf())
+    val list_imgs = remember { mutableStateListOf<Uri?>() }
 
     Column {
 
@@ -28,14 +26,16 @@ fun ImagePickerView(
             contract = ActivityResultContracts.PickMultipleVisualMedia(10),
             onResult = { listUri ->
                 if (listUri.isNotEmpty()) {
-                    Log.d("Images Length", selectedImages.value.size.toString())
+
+                    Log.d("Images Length", selectedImages.size.toString())
                     listUri.forEach { uri ->
-                        if (!selectedImages.value.contains(uri)) {
+                        if (!selectedImages.contains(uri)) {
+                            Log.d("Images Length", uri.toString())
                             list_imgs.add(uri)
                         }
                     }
-
-                    selectedImages.value = list_imgs
+                    selectedImages.addAll(list_imgs)
+                    list_imgs.clear()
                 }
             }
         )
