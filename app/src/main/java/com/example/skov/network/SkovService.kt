@@ -5,6 +5,7 @@ import com.example.skov.type.TypeModels.ListCategory
 import com.example.skov.type.TypeModels.ListSubCategory
 import com.example.skov.like.LikeModel
 import com.example.skov.list.Items
+import com.example.skov.location.LocationListModel
 import com.example.skov.login.LoginResponse
 import com.example.skov.registration.PasswordStep.Models
 import com.example.skov.registration.PhoneStep.PhoneResponse
@@ -126,6 +127,10 @@ interface SkovService {
         @Part like : MultipartBody.Part
     ) : Call<LikeModel>
 
+    /**
+     Type view
+     */
+
     @GET("items/category")
     fun getCategory() : Call<ListCategory>
 
@@ -133,4 +138,21 @@ interface SkovService {
     fun getSubCategory(
         @Query("category") id : Int
     ) : Call<ListSubCategory>
+
+    /**
+     Location view
+     */
+
+    @GET("location/country")
+    fun getCountryList() : Call<LocationListModel>
+
+    @GET("location/region")
+    fun getRegionList(
+        @Query("country_id") country_id : Int
+    ) : Call<LocationListModel>
+
+    @GET("location/district")
+    fun getDistrictList(
+        @Query("region_id") region_id : Int
+    ) : Call<LocationListModel>
 }
