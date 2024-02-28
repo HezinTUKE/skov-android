@@ -1,5 +1,6 @@
 package com.example.skov.location
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.skov.network.SkovService
 import com.example.skov.state.Error
@@ -29,7 +30,7 @@ class LocationViewModel : ViewModel() {
         type : Int = 0,
         id : Int? = null
     ){
-        val res =
+        val res = SkovService.getInstance().getCountryList()
             when (type) {
                 0 -> {
                     SkovService.getInstance().getCountryList()
@@ -48,6 +49,8 @@ class LocationViewModel : ViewModel() {
                 response: Response<LocationListModel?>
             ) {
                 location.value = Success(response.body())
+
+                Log.d("LocationView", response.body().toString())
             }
 
             override fun onFailure(call: Call<LocationListModel?>, t: Throwable) {
@@ -55,6 +58,18 @@ class LocationViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun findLocation(locationInput : String) : List<Location?>{
+        val listOfHints = ArrayList<Location?>(arrayListOf())
+
+        location.value.state!!.countrys.forEach {
+            if(it.name.lowercase().contains(locationInput)) {
+                listOfHints.add(it)
+            }
+        }
+
+        return listOfHints.toList()
     }
 
 }

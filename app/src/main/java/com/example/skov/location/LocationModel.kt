@@ -1,10 +1,13 @@
 package com.example.skov.location
 
+import android.graphics.drawable.Icon
+
 data class LocationListModel(
-    val locations : List<Location>
+    val countrys : List<Location>
 )
 
 data class Location(
     val id : Int,
-    val name : String
+    val name : String,
+    val icon : String?
 )

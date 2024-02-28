@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Delete
@@ -30,20 +32,26 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.skov.CheckImageView
 import com.example.skov.utils.ImagePickerView
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-@SuppressLint("MutableCollectionMutableState")
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StepFourView(
-    selectedImages : MutableList<Uri?>
+    selectedImages : MutableList<Uri?>,
+    pager : PagerState
 ){
     val list_imgs = remember { mutableStateListOf<Uri?>()}
     val remove_list_imgs = remember { mutableStateListOf<Uri?>()}
+
+    val coroutine = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -108,6 +116,9 @@ fun StepFourView(
                 
                 OutlinedButton(onClick = {
                     selectedImages.addAll(list_imgs)
+                    coroutine.launch {
+                        pager.scrollToPage(pager.currentPage + 1)
+                    }
                 }) {
                     Text(text = "Ok")
                 }

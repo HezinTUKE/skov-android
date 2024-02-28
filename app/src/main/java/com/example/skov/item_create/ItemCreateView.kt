@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.skov.item_create.StepFive.CountryView
 import com.example.skov.item_create.StepFour.StepFourView
 import com.example.skov.item_create.StepOne.StepOneCreateItem
 import com.example.skov.item_create.StepThree.StepThreeCreateItem
@@ -40,7 +41,7 @@ fun ItemCreateView(){
     }
 
     val pagerState = rememberPagerState(pageCount = {
-        4
+        5
     })
 
     Box(
@@ -78,8 +79,13 @@ fun ItemCreateView(){
 
                 3 -> {
                     StepFourView(
-                        selectedImages = selectedImages
+                        selectedImages = selectedImages,
+                        pager = pagerState
                     )
+                }
+
+                4 -> {
+                    CountryView()
                 }
             }
         }
