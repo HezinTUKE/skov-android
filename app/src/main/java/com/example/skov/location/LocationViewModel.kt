@@ -8,7 +8,6 @@ import com.example.skov.state.FEState
 import com.example.skov.state.Loading
 import com.example.skov.state.Success
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,8 +15,11 @@ import retrofit2.Response
 
 class LocationViewModel : ViewModel() {
 
-    private var location = MutableStateFlow<FEState<LocationListModel>>(Loading(null))
-    val locationObserver = location.asStateFlow()
+    private var locationCountry = MutableStateFlow<FEState<LocationListModel>>(Loading(null))
+
+    private var locationRegion = MutableStateFlow<FEState<LocationListModel>>(Loading(null))
+
+    private var locationDistrict = MutableStateFlow<FEState<LocationListModel>>(Loading(null))
 
     /**
      type :
@@ -30,7 +32,7 @@ class LocationViewModel : ViewModel() {
         type : Int = 0,
         id : Int? = null
     ){
-        val res = SkovService.getInstance().getCountryList()
+        val res =
             when (type) {
                 0 -> {
                     SkovService.getInstance().getCountryList()
@@ -48,22 +50,52 @@ class LocationViewModel : ViewModel() {
                 call: Call<LocationListModel?>,
                 response: Response<LocationListModel?>
             ) {
-                location.value = Success(response.body())
+                when (type) {
+                    0 -> {
+                        locationCountry.value = Success(response.body())
+                    }
+                    1 -> {
+                        locationRegion.value = Success(response.body())
+                    }
+                    else -> {
+                        locationDistrict.value = Success(response.body())
+                    }
+                }
 
                 Log.d("LocationView", response.body().toString())
             }
 
             override fun onFailure(call: Call<LocationListModel?>, t: Throwable) {
-                location.value = Error(null)
+                when (type) {
+                    0 -> {
+                        locationCountry.value = Error(null)
+                    }
+                    1 -> {
+                        locationRegion.value = Error(null)
+                    }
+                    else -> {
+                        locationDistrict.value = Error(null)
+                    }
+                }
             }
-
         })
     }
 
-    fun findLocation(locationInput : String) : List<Location?>{
+    fun findLocation(locationInput : String, type : Int) : List<Location?>{
         val listOfHints = ArrayList<Location?>(arrayListOf())
+        val locationList = when (type) {
+            0 -> {
+                locationCountry.value
+            }
+            1 -> {
+                locationRegion.value
+            }
+            else -> {
+                locationDistrict.value
+            }
+        }
 
-        location.value.state!!.countrys.forEach {
+        locationList.state!!.location.forEach {
             if(it.name.lowercase().contains(locationInput)) {
                 listOfHints.add(it)
             }

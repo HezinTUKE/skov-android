@@ -2,9 +2,7 @@ package com.example.skov.item_create
 
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -14,7 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.skov.item_create.StepFive.CountryView
+import com.example.skov.item_create.StepFive.StepFiveView
 import com.example.skov.item_create.StepFour.StepFourView
 import com.example.skov.item_create.StepOne.StepOneCreateItem
 import com.example.skov.item_create.StepThree.StepThreeCreateItem
@@ -34,6 +32,18 @@ fun ItemCreateView(){
     }
     val subcategory = remember {
         mutableStateOf(-1)
+    }
+
+    val country = remember {
+        mutableStateOf(0)
+    }
+
+    val region = remember {
+        mutableStateOf(0)
+    }
+
+    val district = remember {
+        mutableStateOf(0)
     }
 
     val selectedImages = remember {
@@ -85,7 +95,11 @@ fun ItemCreateView(){
                 }
 
                 4 -> {
-                    CountryView()
+                    StepFiveView(
+                        country = country,
+                        region = region,
+                        district = district,
+                        pager = pagerState)
                 }
             }
         }

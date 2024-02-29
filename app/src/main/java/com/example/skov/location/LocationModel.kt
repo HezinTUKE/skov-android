@@ -3,7 +3,7 @@ package com.example.skov.location
 import android.graphics.drawable.Icon
 
 data class LocationListModel(
-    val countrys : List<Location>
+    val location : List<Location>
 )
 
 data class Location(
