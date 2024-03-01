@@ -1,6 +1,5 @@
 package com.example.skov.location
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -47,7 +46,7 @@ fun LocationView(
 ){
     var location by remember { mutableStateOf<Location?>(null) }
     val listOfCountry = remember { mutableStateListOf<Location?>() }
-    var countryTxt by remember { mutableStateOf("") }
+    var locationTxt by remember { mutableStateOf("") }
 
     var change  by remember { mutableStateOf(false) }
 
@@ -66,18 +65,20 @@ fun LocationView(
         horizontalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            value = countryTxt,
+            value = locationTxt,
             onValueChange = {
-                countryTxt = it
+                locationTxt = it
                 listOfCountry.clear()
 
-                if (countryTxt.isNotEmpty()) {
-                    val list = modelViewLocation.findLocation(countryTxt.lowercase(), locationType)
+                location = modelViewLocation.autofillLocation(locationTxt, locationType)
+
+                if (locationTxt.isNotEmpty()) {
+                    val list = modelViewLocation.findLocation(locationTxt, locationType)
                     listOfCountry.addAll(list)
-                }else if(countryTxt.isEmpty()){
+                }else if(locationTxt.isEmpty()){
                     locationState.value = 0
                     location = null
-                }
+                }else
             },
             leadingIcon = {
                 if (location == null || locationType >= 1) {
@@ -90,6 +91,14 @@ fun LocationView(
                         modifier = Modifier.size(25.dp),
                         model = "http://10.0.2.2:8000/media/${location!!.icon}",
                         contentDescription = null,
+                    )
+                }
+            },
+            trailingIcon = {
+                if(location != null) {
+                    Image(
+                        painter = painterResource(R.drawable.check),
+                        contentDescription = null
                     )
                 }
             },
@@ -111,7 +120,7 @@ fun LocationView(
                                         .align(Alignment.CenterVertically)
                                         .clickable {
                                             location = country
-                                            countryTxt = country!!.name
+                                            locationTxt = country!!.name
                                             locationState.value = country.id
                                             listOfCountry.clear()
                                         },

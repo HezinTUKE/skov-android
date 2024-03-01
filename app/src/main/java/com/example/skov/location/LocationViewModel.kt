@@ -81,27 +81,45 @@ class LocationViewModel : ViewModel() {
         })
     }
 
-    fun findLocation(locationInput : String, type : Int) : List<Location?>{
-        val listOfHints = ArrayList<Location?>(arrayListOf())
-        val locationList = when (type) {
+    fun getArray(type: Int) : List<Location?>{
+        return when (type) {
             0 -> {
-                locationCountry.value
+                locationCountry.value.state!!.location
             }
             1 -> {
-                locationRegion.value
+                locationRegion.value.state!!.location
             }
             else -> {
-                locationDistrict.value
+                locationDistrict.value.state!!.location
             }
         }
+    }
 
-        locationList.state!!.location.forEach {
-            if(it.name.lowercase().contains(locationInput)) {
+    fun findLocation(locationInput : String, type : Int) : List<Location?>{
+        val listOfHints = ArrayList<Location?>(arrayListOf())
+        val locationList = getArray(type)
+
+        locationList.forEach {
+            if(it!!.name.lowercase().contains(locationInput.lowercase())) {
                 listOfHints.add(it)
             }
         }
 
         return listOfHints.toList()
+    }
+
+    fun autofillLocation(locationInput: String, type : Int) : Location?{
+        val locationList = getArray(type)
+
+        var location : Location? = null
+
+        locationList.forEach {
+            if(it!!.name.lowercase() == locationInput.lowercase()) {
+                location = it
+            }
+        }
+
+        return location
     }
 
 }
