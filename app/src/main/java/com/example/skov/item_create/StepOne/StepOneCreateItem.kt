@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.skov.R
 import com.example.skov.widgets.buttons.SkovOutlinedButton
+import com.example.skov.widgets.textfields.SkovOutlinedTextField
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -39,30 +40,24 @@ fun StepOneCreateItem(
         val coroutine = rememberCoroutineScope()
 
         Text(text = "Nazov")
-        TextField(
-            modifier = Modifier.width(300.dp),
+        SkovOutlinedTextField(
             value = name.value,
             onValueChange = {
                 if (it.length <= 15)
                     name.value = it
             },
-            label = {
-                Text(text = "Name")
-            }
+            label = "Name"
         )
 
         Text(text = "Description")
 
-        TextField(
-            modifier = Modifier.width(300.dp),
+        SkovOutlinedTextField(
             value = description.value,
             onValueChange = {
                 if (it.length <= 255)
                     description.value = it
             },
-            label = {
-                Text(text = "Description")
-            },
+            label = "Description",
             minLines = 10
         )
 

@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
 import com.example.skov.R
+import com.example.skov.widgets.buttons.SkovOutlinedButton
+import com.example.skov.widgets.textfields.SkovOutlinedTextField
 
 @Composable
 fun LocationView(
@@ -64,7 +66,7 @@ fun LocationView(
             },
         horizontalArrangement = Arrangement.Center
     ) {
-        OutlinedTextField(
+        SkovOutlinedTextField(
             value = locationTxt,
             onValueChange = {
                 locationTxt = it
@@ -82,6 +84,7 @@ fun LocationView(
                     locationTxt = location!!.name
                 }
             },
+            label = "",
             leadingIcon = {
                 if (location == null || locationType >= 1) {
                     Image(
@@ -104,62 +107,60 @@ fun LocationView(
                     )
                 }
             },
-            maxLines = 1,
             supportingText =
-                if (listOfCountry.size > 0) {
-                    {
-                        LazyColumn(
-                            modifier = Modifier
-                                .width(270.dp)
-                                .padding(end = 25.dp),
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            itemsIndexed(listOfCountry){ _, country ->
-                                Card(
+            if (listOfCountry.size > 0) {
+                {
+                    LazyColumn(
+                        modifier = Modifier
+                            .width(270.dp)
+                            .padding(end = 25.dp),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        itemsIndexed(listOfCountry){ _, country ->
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .height(35.dp)
+                                    .align(Alignment.CenterVertically)
+                                    .clickable {
+                                        location = country
+                                        locationTxt = country!!.name
+                                        locationState.value = country.id
+                                        listOfCountry.clear()
+                                    },
+                                border = BorderStroke(width = 1.dp, color = Color.Black),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White,
+                                ),
+                                shape = CutCornerShape(0.dp),
+                            ) {
+                                Row(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .height(35.dp)
-                                        .align(Alignment.CenterVertically)
-                                        .clickable {
-                                            location = country
-                                            locationTxt = country!!.name
-                                            locationState.value = country.id
-                                            listOfCountry.clear()
-                                        },
-                                    border = BorderStroke(width = 1.dp, color = Color.Black),
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = Color.White,
-                                    ),
-                                    shape = CutCornerShape(0.dp),
+                                        .padding(5.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    Row(
+                                    Text(
                                         modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(5.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            modifier = Modifier
-                                                .height(40.dp),
-                                            fontSize = 18.sp,
-                                            textAlign = TextAlign.Center,
-                                            text = country!!.name,
+                                            .height(40.dp),
+                                        fontSize = 18.sp,
+                                        textAlign = TextAlign.Center,
+                                        text = country!!.name,
+                                    )
+                                    if (locationType == 0) {
+                                        SubcomposeAsyncImage(
+                                            modifier = Modifier.size(25.dp),
+                                            model = "http://10.0.2.2:8000/media/${country.icon}",
+                                            contentDescription = null,
                                         )
-                                        if (locationType == 0) {
-                                            SubcomposeAsyncImage(
-                                                modifier = Modifier.size(25.dp),
-                                                model = "http://10.0.2.2:8000/media/${country.icon}",
-                                                contentDescription = null,
-                                            )
-                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }else{ null }
-
+                }
+            }else{ null }
         )
     }
 
