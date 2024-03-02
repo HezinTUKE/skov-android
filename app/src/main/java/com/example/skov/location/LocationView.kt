@@ -75,10 +75,12 @@ fun LocationView(
                 if (locationTxt.isNotEmpty()) {
                     val list = modelViewLocation.findLocation(locationTxt, locationType)
                     listOfCountry.addAll(list)
-                }else if(locationTxt.isEmpty()){
+                } else if (locationTxt.isEmpty()) {
                     locationState.value = 0
                     location = null
-                }else
+                } else if (location != null){
+                    locationTxt = location!!.name
+                }
             },
             leadingIcon = {
                 if (location == null || locationType >= 1) {

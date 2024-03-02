@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skov.location.LocationView
+import com.example.skov.widgets.buttons.SkovOutlinedButton
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -59,5 +62,18 @@ fun StepFiveView(
             )
         }
 
+        if (region.value > 0 && country.value > 0 && district.value > 0){
+
+            Spacer(
+                modifier = Modifier
+                    .height(25.dp)
+            )
+
+            SkovOutlinedButton(
+                text = "Ok",
+                onClick = { /*TODO*/ }
+            )
+        }
+        
     }
 }

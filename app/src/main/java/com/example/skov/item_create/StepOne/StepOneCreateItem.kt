@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.skov.R
+import com.example.skov.widgets.buttons.SkovOutlinedButton
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -66,13 +67,13 @@ fun StepOneCreateItem(
         )
 
         Row {
-           OutlinedButton(onClick = {
-               coroutine.launch {
-                   pager.scrollToPage(pager.currentPage + 1) }
-               }
-           ) {
-               Text(text = stringResource(R.string.next_step))
-           }
+            SkovOutlinedButton(
+                text = stringResource(R.string.next_step),
+                onClick = {
+                    coroutine.launch {
+                        pager.scrollToPage(pager.currentPage + 1) }
+                }
+            )
         }
     }
 }

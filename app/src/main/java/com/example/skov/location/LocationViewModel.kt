@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.Normalizer
 
 
 class LocationViewModel : ViewModel() {
@@ -100,7 +101,7 @@ class LocationViewModel : ViewModel() {
         val locationList = getArray(type)
 
         locationList.forEach {
-            if(it!!.name.lowercase().contains(locationInput.lowercase())) {
+            if(it!!.name.lowercase().removeDiacritics().contains(locationInput.lowercase().removeDiacritics())) {
                 listOfHints.add(it)
             }
         }
@@ -114,7 +115,7 @@ class LocationViewModel : ViewModel() {
         var location : Location? = null
 
         locationList.forEach {
-            if(it!!.name.lowercase() == locationInput.lowercase()) {
+            if(it!!.name.lowercase().removeDiacritics() == locationInput.lowercase().removeDiacritics()) {
                 location = it
             }
         }
@@ -122,4 +123,8 @@ class LocationViewModel : ViewModel() {
         return location
     }
 
+    fun String.removeDiacritics() : String{
+        Normalizer.normalize(this, Normalizer.Form.NFD)
+        return this
+    }
 }
