@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -23,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.skov.type.TypeModels.Type
+import com.example.skov.widgets.buttons.SkovOutlinedButton
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -36,7 +40,8 @@ fun CategorysView(
    val coroutine = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -46,47 +51,34 @@ fun CategorysView(
         )
         
         LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(3),
+            columns = StaggeredGridCells.Adaptive(125.dp),
             contentPadding = PaddingValues(16.dp),
             verticalItemSpacing = 16.dp,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             content = {
                 itemsIndexed(types) { _, categ ->
-                    OutlinedButton(
+
+                    SkovOutlinedButton(
                         onClick = {
                             type.value = categ.id
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (type.value == categ.id) {
-                                Color.Black
-                            } else {
-                                Color.White
-                            }
-                        )
-                    ) {
-                        Text(
-                            text = categ.name,
-                            color = if (type.value == categ.id) {
-                                Color.White
-                            } else {
-                                Color.Black
-                            }
-                        )
-                    }
+                        text = categ.name,
+                        isClicked = type.value == categ.id
+                    )
                 }
             }
         )
+        
+        Spacer(modifier = Modifier.height(30.dp))
 
-        OutlinedButton(
-            modifier = Modifier.padding(top = 30.dp),
+        SkovOutlinedButton(
             onClick = {
                 coroutine.launch {
                     pager.scrollToPage(pager.currentPage + 1)
                 }
-            }
-        ) {
-            Text(text = "Ok")
-        }
+            },
+            text = "Ok"
+        )
 
     }
 }
