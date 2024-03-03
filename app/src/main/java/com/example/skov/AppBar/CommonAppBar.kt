@@ -11,12 +11,15 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.skov.R
+import com.example.skov.item_create.ItemCreateView
 import com.example.skov.navigation.Routes
 
 @Composable
@@ -24,11 +27,19 @@ fun CommonAppBar(
     navHost : NavHostController,
     screen : @Composable() () -> Unit
 ){
+    var openCreate = remember {
+        mutableStateOf(false)
+    }
+
+    val density = LocalDensity.current
     Scaffold (
         bottomBar = {
             BottomAppBar(
                 actions = {
-                    IconButton(onClick = { navHost.navigate(Routes.LIST.route) }) {
+                    IconButton(onClick = {
+                        navHost.navigate(Routes.LIST.route)
+                        openCreate.value = false
+                    }) {
                         Image(
                             painter = painterResource(id = R.drawable.laptop),
                             modifier = Modifier.size(25.dp),
@@ -60,7 +71,10 @@ fun CommonAppBar(
 
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = { navHost.navigate(Routes.ITEM_CREATE.route) },
+                        onClick = {
+//                            navHost.navigate(Routes.ITEM_CREATE.route)
+                            openCreate.value = !openCreate.value
+                        },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {
@@ -75,9 +89,16 @@ fun CommonAppBar(
             )
         },
         content = {
-            Modifier.fillMaxSize().padding(it)
+            Modifier
+                .fillMaxSize()
+                .padding(it)
 
-            screen()
+            if(openCreate.value){
+                    ItemCreateView(openCreate)
+            }else {
+                screen()
+
+            }
         }
     )
 }

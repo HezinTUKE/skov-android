@@ -1,107 +1,123 @@
 package com.example.skov.item_create
 
-import android.net.Uri
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.skov.item_create.StepFive.StepFiveView
-import com.example.skov.item_create.StepFour.StepFourView
-import com.example.skov.item_create.StepOne.StepOneCreateItem
-import com.example.skov.item_create.StepThree.StepThreeCreateItem
-import com.example.skov.item_create.StepTwo.StepTwoCreateItem
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ItemCreateView(){
-    val name = remember{
-        mutableStateOf("")
-    }
-    val description = remember {
-        mutableStateOf("")
-    }
-    val category = remember {
-        mutableStateOf(-1)
-    }
-    val subcategory = remember {
-        mutableStateOf(-1)
-    }
-
-    val country = remember {
-        mutableStateOf(0)
-    }
-
-    val region = remember {
-        mutableStateOf(0)
-    }
-
-    val district = remember {
-        mutableStateOf(0)
-    }
-
-    val selectedImages = remember {
-        mutableStateListOf<Uri?>()
+fun ItemCreateView(
+    openCreate : MutableState<Boolean>
+){
+    var expanded by remember {
+        mutableStateOf(false)
     }
 
     val pagerState = rememberPagerState(pageCount = {
         5
     })
 
-    Box(
+    val text = remember {
+        mutableStateOf("")
+    }
+
+    Card(
         modifier = Modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Black
+        ),
+        shape = RectangleShape,
     ) {
-        HorizontalPager(
-            userScrollEnabled = false,
-            state = pagerState,
-        ) { page ->
-            when(page) {
-                0 -> {
-                    StepOneCreateItem(
-                        name = name,
-                        description = description,
-                        pager = pagerState
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier
+                    .width(280.dp)
+                    .padding(start = 15.dp, top = 15.dp)
+                    .animateContentSize(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioLowBouncy,
+                            stiffness = Spring.StiffnessLow
+                        )
                     )
-                }
+                    .verticalScroll(rememberScrollState())
+                    .clickable {
+                        expanded = !expanded
+                    },
+                text = if (expanded) text.value else "${text.value}...",
+                maxLines = if(!expanded) 1 else 10,
+                color = Color.White
 
-                1 -> {
-                    StepTwoCreateItem(
-                        category = category,
-                        pager = pagerState
-                    )
-                }
-
-                2 -> {
-                    StepThreeCreateItem(
-                        category = category.value,
-                        subcategory = subcategory,
-                        pager = pagerState
-                    )
-                }
-
-                3 -> {
-                    StepFourView(
-                        selectedImages = selectedImages,
-                        pager = pagerState
-                    )
-                }
-
-                4 -> {
-                    StepFiveView(
-                        country = country,
-                        region = region,
-                        district = district,
-                        pager = pagerState)
-                }
+            )
+            IconButton(onClick = { openCreate.value = false },
+                modifier = Modifier
+                    .padding(top = 25.dp, end = 25.dp, start = 15.dp)
+                    .size(25.dp)
+                    .border(3.dp, Color.White, shape = CircleShape)
+            ){
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
+
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 25.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
+            shape = RoundedCornerShape(25.dp),
+        ) {
+            ItemCreatePagerView(
+                pagerState,
+                text
+            )
         }
     }
 }
+

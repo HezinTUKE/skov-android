@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.skov.AppBar.CommonAppBar
 import com.example.skov.item.ItemView
-import com.example.skov.item_create.ItemCreateView
+import com.example.skov.item_create.ItemCreatePagerView
 import com.example.skov.list.ListView
 import com.example.skov.login.LoginView
 import com.example.skov.registration.RegistrationView
@@ -37,11 +37,11 @@ fun NavigationView(
                 )
             }
         }
-        composable(Routes.ITEM_CREATE.route){
-            CommonAppBar(controller) {
-                ItemCreateView()
-            }
-        }
+//        composable(Routes.ITEM_CREATE.route){
+//            CommonAppBar(controller) {
+//                ItemCreatePagerView()
+//            }
+//        }
         composable(
             route = "${Routes.ITEM.route}?id={id}",
             arguments = listOf(navArgument("id") {
