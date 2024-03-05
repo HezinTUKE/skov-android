@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.skov.item_create.StepFive.StepFiveView
 import com.example.skov.item_create.StepFour.StepFourView
 import com.example.skov.item_create.StepOne.StepOneCreateItem
+import com.example.skov.item_create.StepSix.StepSixView
 import com.example.skov.item_create.StepThree.StepThreeCreateItem
 import com.example.skov.item_create.StepTwo.StepTwoCreateItem
 
@@ -69,6 +70,9 @@ fun ItemCreatePagerView(
         ) { page ->
             when(page) {
                 0 -> {
+                    StepSixView()
+
+                    /*
                     text.value = "Name your product and describe it"
 
                     StepOneCreateItem(
@@ -76,6 +80,8 @@ fun ItemCreatePagerView(
                         description = description,
                         pager = pagerState
                     )
+
+                     */
                 }
 
                 1 -> {

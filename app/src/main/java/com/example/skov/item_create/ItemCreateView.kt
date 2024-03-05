@@ -47,7 +47,7 @@ fun ItemCreateView(
     }
 
     val pagerState = rememberPagerState(pageCount = {
-        5
+        6
     })
 
     val text = remember {
