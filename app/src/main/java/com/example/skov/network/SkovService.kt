@@ -110,14 +110,14 @@ interface SkovService {
     fun getList(
         @Header("Authorization") token: String,
     ) : Call<Items?>
-//    @Header("Authorization") token: String?
     /**
      item view
      */
 
     @GET("items/item")
     fun getItem(
-      @Query("id") id : Int
+      @Query("id") id : Int,
+      @Header("Authorization") token: String,
     ) : Call<ItemResponseModel>
 
     @Multipart

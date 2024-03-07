@@ -1,5 +1,6 @@
 package com.example.skov.item
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.skov.item.state.Error
 import com.example.skov.item.state.ItemState
@@ -18,15 +19,19 @@ class ViewModel : ViewModel() {
     val state = responseItem.asStateFlow()
 
     fun getItem(
+        token : String,
         id : Int
     ){
-        val req = SkovService.getInstance().getItem(id)
+
+
+        val req = SkovService.getInstance().getItem(id, "Token $token")
 
         req.enqueue(object : Callback<ItemResponseModel> {
             override fun onResponse(
                 call: Call<ItemResponseModel>,
                 response: Response<ItemResponseModel>
             ) {
+                Log.d("ItemL", response.body().toString())
                 responseItem.value = Success(response.body())
             }
 

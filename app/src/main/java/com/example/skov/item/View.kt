@@ -1,16 +1,20 @@
 package com.example.skov.item
 
+import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skov.LoadingView
 import com.example.skov.item.state.Error
 import com.example.skov.item.state.Loading
 import com.example.skov.item.state.Success
 import com.example.skov.item.success.SuccessView
+import com.example.skov.login.UserSession
+import kotlinx.coroutines.flow.first
 
 @Composable
 fun ItemView(
@@ -18,9 +22,11 @@ fun ItemView(
     id : Int
 ){
     val response by viewModelItem.state.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(response){
-        viewModelItem.getItem(id)
+        val token = UserSession.getAccessToken( context ).first()
+        viewModelItem.getItem(token, id)
     }
 
     when(response){
