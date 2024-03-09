@@ -1,43 +1,67 @@
 package com.example.skov.item_create.StepSix
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.skov.widgets.buttons.SkovOutlinedButton
+import com.example.skov.widgets.datepicker.DateViewModel
 import com.example.skov.widgets.datepicker.SkovDatePicker
+import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StepSixView() {
-    val state = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
-    var openDialog by remember { mutableStateOf(true) }
+fun StepSixView(
+    postDate : MutableState<Date?>,
+    dateViewModel : DateViewModel = viewModel()
+) {
+    val datePickerState = remember {
+        mutableStateOf<DatePickerState?>(null)
+    }
 
-    var (dateDialogEnable, setEnable ) = remember { mutableStateOf(false) }
+    val dateTomorrow = remember {
+        mutableStateOf<Long?>(null)
+    }
+
+    val (dateDialogEnable, setEnable ) = remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        val d = dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow())
+        dateTomorrow.value = ((d + 86400) * 1000)
+    }
 
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
 
         Row(
@@ -46,7 +70,12 @@ fun StepSixView() {
                 .height(56.dp)
                 .toggleable(
                     value = dateDialogEnable,
-                    onValueChange = { setEnable(!dateDialogEnable) },
+                    onValueChange = {
+                        setEnable(!dateDialogEnable)
+                        if (!dateDialogEnable) {
+                            postDate.value = null
+                        }
+                    },
                     role = Role.Checkbox
                 )
                 .padding(horizontal = 16.dp),
@@ -70,7 +99,25 @@ fun StepSixView() {
 
         SkovDatePicker(
             minYear = 2024,
+            minTimeMillis = dateTomorrow.value,
+            datePickerState = datePickerState,
             show = dateDialogEnable
         )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            SkovOutlinedButton(
+                text = "Ok",
+                onClick = {
+                    Log.d("DatePicker",
+                        datePickerState.value!!.selectedDateMillis.toString())
+                }
+            )
+        }
+
     }
 }

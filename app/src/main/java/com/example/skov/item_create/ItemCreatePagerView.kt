@@ -22,6 +22,7 @@ import com.example.skov.item_create.StepOne.StepOneCreateItem
 import com.example.skov.item_create.StepSix.StepSixView
 import com.example.skov.item_create.StepThree.StepThreeCreateItem
 import com.example.skov.item_create.StepTwo.StepTwoCreateItem
+import java.util.Date
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -58,6 +59,10 @@ fun ItemCreatePagerView(
         mutableStateListOf<Uri?>()
     }
 
+    val postDate = remember {
+        mutableStateOf<Date?>(null)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +75,7 @@ fun ItemCreatePagerView(
         ) { page ->
             when(page) {
                 0 -> {
-                    StepSixView()
+                    StepSixView(postDate)
 
                     /*
                     text.value = "Name your product and describe it"
