@@ -86,7 +86,8 @@ fun StepSixView(
 
         SkovDatePicker(
             minYear = true,
-            minTimeMillis = (dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow()) + 86400) * 1000,
+            minTimeMillis = (dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow())) * 1000,
+            initTimeMillis = (dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow()) + 86400) * 1000,
             datePickerState = datePickerState,
             show = dateDialogEnable
         )

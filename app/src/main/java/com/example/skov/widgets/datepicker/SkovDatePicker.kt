@@ -20,13 +20,14 @@ import java.util.Calendar
 fun SkovDatePicker(
     minYear : Boolean,
     minTimeMillis : Long?,
+    initTimeMillis : Long?,
     datePickerState : MutableState<DatePickerState?>,
     show : Boolean = true
 ){
 
     datePickerState.value = rememberDatePickerState(
         initialDisplayMode = DisplayMode.Input,
-        initialSelectedDateMillis = minTimeMillis,
+        initialSelectedDateMillis = initTimeMillis,
         selectableDates = object : SelectableDates {
             override fun isSelectableYear(year: Int): Boolean {
                 return if(!minYear){
@@ -39,7 +40,7 @@ fun SkovDatePicker(
                 return if (minTimeMillis == null){
                     true
                 }else {
-                    utcTimeMillis >= minTimeMillis
+                    utcTimeMillis >= minTimeMillis - (86400 * 2)
                 }
 
             }
