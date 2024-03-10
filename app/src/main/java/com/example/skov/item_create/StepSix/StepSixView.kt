@@ -39,24 +39,14 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StepSixView(
-    postDate : MutableState<Date?>,
+    postDate : MutableState<String?>,
     dateViewModel : DateViewModel = viewModel()
 ) {
     val datePickerState = remember {
         mutableStateOf<DatePickerState?>(null)
     }
 
-    val dateTomorrow = remember {
-        mutableStateOf<Long?>(null)
-    }
-
     val (dateDialogEnable, setEnable ) = remember { mutableStateOf(false) }
-
-    LaunchedEffect(true) {
-        val d = dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow())
-        dateTomorrow.value = ((d + 86400) * 1000)
-    }
-
 
     Column(
         modifier = Modifier
@@ -72,9 +62,6 @@ fun StepSixView(
                     value = dateDialogEnable,
                     onValueChange = {
                         setEnable(!dateDialogEnable)
-                        if (!dateDialogEnable) {
-                            postDate.value = null
-                        }
                     },
                     role = Role.Checkbox
                 )
@@ -98,8 +85,8 @@ fun StepSixView(
         }
 
         SkovDatePicker(
-            minYear = 2024,
-            minTimeMillis = dateTomorrow.value,
+            minYear = true,
+            minTimeMillis = (dateViewModel.convertToTimeStamp(dateViewModel.getTomorrow()) + 86400) * 1000,
             datePickerState = datePickerState,
             show = dateDialogEnable
         )
@@ -113,8 +100,14 @@ fun StepSixView(
             SkovOutlinedButton(
                 text = "Ok",
                 onClick = {
-                    Log.d("DatePicker",
-                        datePickerState.value!!.selectedDateMillis.toString())
+                    if (dateDialogEnable) {
+                        postDate.value = dateViewModel
+                            .timeStampToDate(datePickerState.value!!.selectedDateMillis!!)
+                    }else{
+                        postDate.value = null
+                    }
+
+                    Log.d("DatePickerLog", postDate.value.toString())
                 }
             )
         }

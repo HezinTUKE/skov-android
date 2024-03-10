@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import java.util.Calendar
 
 @ExperimentalMaterial3Api
 @Composable
 fun SkovDatePicker(
-    minYear : Int?,
+    minYear : Boolean,
     minTimeMillis : Long?,
     datePickerState : MutableState<DatePickerState?>,
     show : Boolean = true
@@ -28,10 +29,10 @@ fun SkovDatePicker(
         initialSelectedDateMillis = minTimeMillis,
         selectableDates = object : SelectableDates {
             override fun isSelectableYear(year: Int): Boolean {
-                return if(minYear == null){
+                return if(!minYear){
                     true
                 }else{
-                    year >= minYear
+                    year >= Calendar.getInstance().get(Calendar.YEAR)
                 }
             }
             override fun isSelectableDate(utcTimeMillis: Long) : Boolean {

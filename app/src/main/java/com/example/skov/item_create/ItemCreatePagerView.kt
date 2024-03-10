@@ -1,6 +1,8 @@
 package com.example.skov.item_create
 
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +26,7 @@ import com.example.skov.item_create.StepThree.StepThreeCreateItem
 import com.example.skov.item_create.StepTwo.StepTwoCreateItem
 import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemCreatePagerView(
@@ -60,7 +63,7 @@ fun ItemCreatePagerView(
     }
 
     val postDate = remember {
-        mutableStateOf<Date?>(null)
+        mutableStateOf<String?>(null)
     }
 
     Box(

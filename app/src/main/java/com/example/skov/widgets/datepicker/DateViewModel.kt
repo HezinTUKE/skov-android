@@ -23,8 +23,8 @@ class DateViewModel : ViewModel(){
 
     @SuppressLint("SimpleDateFormat")
     fun timeStampToDate(timeMillis : Long): String{
-        val sdf = SimpleDateFormat("MM-dd-yyyy")
-        val netDate = Date(timeMillis * 1000)
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val netDate = Date(timeMillis)
         return sdf.format(netDate)
     }
 }
