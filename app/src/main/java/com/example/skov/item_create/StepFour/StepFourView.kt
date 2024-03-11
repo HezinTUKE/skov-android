@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
@@ -95,12 +98,11 @@ fun StepFourView(
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White,
                     ),
-                    border = BorderStroke(3.dp, Color.Black),
                 ) {
 
-                    LazyVerticalGrid(
-                        columns = GridCells.Adaptive(minSize = 128.dp),
-                        verticalArrangement = Arrangement.spacedBy(3.dp),
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
+                        verticalItemSpacing = 3.dp,
                         horizontalArrangement = Arrangement.spacedBy(3.dp)
                     ) {
                         itemsIndexed(list_imgs) { _, uri ->

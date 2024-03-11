@@ -1,11 +1,14 @@
 package com.example.skov.type
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +19,8 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,34 +45,41 @@ fun CategorysView(
    val coroutine = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             modifier = Modifier.height(55.dp),
             text = txtHeader
         )
-        
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Adaptive(125.dp),
-            contentPadding = PaddingValues(16.dp),
-            verticalItemSpacing = 16.dp,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            content = {
-                itemsIndexed(types) { _, categ ->
 
-                    SkovOutlinedButton(
-                        onClick = {
-                            type.value = categ.id
-                        },
-                        text = categ.name,
-                        isClicked = type.value == categ.id
-                    )
+        Card(
+            modifier = Modifier
+                .fillMaxHeight(0.7f)
+                .fillMaxWidth()
+                .padding(3.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
+        ) {
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Adaptive(125.dp),
+                contentPadding = PaddingValues(16.dp),
+                verticalItemSpacing = 16.dp,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                content = {
+                    itemsIndexed(types) { _, categ ->
+                        SkovOutlinedButton(
+                            onClick = {
+                                type.value = categ.id
+                            },
+                            text = categ.name,
+                            isClicked = type.value == categ.id
+                        )
+                    }
                 }
-            }
-        )
+            )
+        }
         
         Spacer(modifier = Modifier.height(30.dp))
 

@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DatePickerState
@@ -20,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +30,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skov.widgets.buttons.SkovOutlinedButton
 import com.example.skov.widgets.datepicker.DateViewModel
 import com.example.skov.widgets.datepicker.SkovDatePicker
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +47,6 @@ fun StepSixView(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
     ) {
 
         Row(
@@ -78,7 +73,7 @@ fun StepSixView(
                 )
             )
             Text(
-                text = "Option selection",
+                text = "Activate immediately",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(start = 16.dp)
             )
@@ -104,7 +99,7 @@ fun StepSixView(
                     if (dateDialogEnable) {
                         postDate.value = dateViewModel
                             .timeStampToDate(datePickerState.value!!.selectedDateMillis!!)
-                    }else{
+                    } else {
                         postDate.value = null
                     }
 
@@ -112,6 +107,6 @@ fun StepSixView(
                 }
             )
         }
-
     }
+
 }

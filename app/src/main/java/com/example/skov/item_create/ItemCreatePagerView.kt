@@ -4,12 +4,17 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -66,10 +71,16 @@ fun ItemCreatePagerView(
         mutableStateOf<String?>(null)
     }
 
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp),
+            .padding(15.dp)
+            .scrollable(
+                state = scrollState,
+                orientation = Orientation.Vertical
+            ),
         contentAlignment = Alignment.TopCenter
     ) {
         HorizontalPager(
@@ -78,9 +89,6 @@ fun ItemCreatePagerView(
         ) { page ->
             when(page) {
                 0 -> {
-                    StepSixView(postDate)
-
-                    /*
                     text.value = "Name your product and describe it"
 
                     StepOneCreateItem(
@@ -88,8 +96,6 @@ fun ItemCreatePagerView(
                         description = description,
                         pager = pagerState
                     )
-
-                     */
                 }
 
                 1 -> {
@@ -128,6 +134,12 @@ fun ItemCreatePagerView(
                         region = region,
                         district = district,
                         pager = pagerState)
+                }
+
+                5 -> {
+                    text.value = "Select activation date"
+
+                    StepSixView(postDate = postDate)
                 }
             }
         }
