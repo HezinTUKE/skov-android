@@ -1,5 +1,7 @@
 package com.example.skov.item_create
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -37,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemCreateView(
@@ -82,7 +85,7 @@ fun ItemCreateView(
                     .clickable {
                         expanded = !expanded
                     },
-                text = if (expanded) text.value else "${text.value}...",
+                text = text.value ,
                 maxLines = if(!expanded) 1 else 10,
                 color = Color.White
 

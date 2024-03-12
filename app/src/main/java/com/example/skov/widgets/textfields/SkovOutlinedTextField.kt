@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,7 +32,7 @@ fun SkovOutlinedTextField(
     leadingIcon :  @Composable() (() -> Unit)? = null,
     trailingIcon : @Composable() (() -> Unit)? = null,
     visualTransformation : VisualTransformation = VisualTransformation.None,
-    keyboardOptions : KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+    keyboardOptions : KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
 ){
 
     var isFocused by remember {
@@ -42,10 +41,10 @@ fun SkovOutlinedTextField(
 
     OutlinedTextField(
         modifier = Modifier
-            .width(300.dp)
-            .onFocusChanged{
-               isFocused = it.isFocused
-            },
+                .width(300.dp)
+                .onFocusChanged {
+                    isFocused = it.isFocused
+                },
         value = value,
         onValueChange = onValueChange,
         supportingText = supportingText,
