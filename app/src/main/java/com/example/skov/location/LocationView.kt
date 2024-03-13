@@ -1,14 +1,20 @@
 package com.example.skov.location
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -22,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,13 +55,8 @@ fun LocationView(
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment =
-            if (!change){
-                Alignment.CenterVertically
-            }else{
-                Alignment.Top
-            },
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
 
@@ -106,15 +108,16 @@ fun LocationView(
                         )
                     }
                 },
-                colors = ExposedDropdownMenuDefaults.textFieldColors()
             )
             if(listOfCountry.isNotEmpty()){
                 ExposedDropdownMenu(
+                    modifier = Modifier.background(Color.Black),
                     expanded = true,
                     onDismissRequest = { listOfCountry.clear() },
                 ) {
                     listOfCountry.forEach { country ->
                         DropdownMenuItem(
+                            modifier = Modifier.background(Color.White),
                             text = { Text(country!!.name) },
                             onClick = {
                                 location = country
@@ -130,6 +133,12 @@ fun LocationView(
                                 )
                             },
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            colors = MenuDefaults.itemColors(
+                                textColor = Color.Black
+                            )
+                        )
+                        HorizontalDivider(
+                            color = Color.Black,
                         )
                     }
                 }
