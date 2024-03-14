@@ -71,7 +71,9 @@ fun StepFiveView(
 
             SkovOutlinedButton(
                 text = "Ok",
-                onClick = { /*TODO*/ }
+                onClick = {
+
+                }
             )
         }
         

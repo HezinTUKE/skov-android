@@ -155,4 +155,23 @@ interface SkovService {
     fun getDistrictList(
         @Query("region_id") region_id : Int
     ) : Call<LocationListModel>
+
+    /**
+        Create Item
+    **/
+
+    @POST("items/item")
+    fun postItem(
+        @Header("Authorization") token: String,
+
+        @Part category_id : MultipartBody.Part,
+        @Part subcategory_id : MultipartBody.Part,
+        @Part country_id : MultipartBody.Part,
+        @Part region_id : MultipartBody.Part,
+        @Part is_active : MultipartBody.Part,
+        @Part title : MultipartBody.Part,
+        @Part description : MultipartBody.Part,
+        @Part price : MultipartBody.Part,
+        @Part photos : MultipartBody.Part,
+    )
 }
