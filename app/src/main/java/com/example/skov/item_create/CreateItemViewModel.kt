@@ -25,17 +25,17 @@ class CreateItemViewModel : ViewModel() {
         photos : List<Uri>,
         token : String
     ){
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id.toString())
-//        val subcategoryPart = MultipartBody.Part.createFormData("subcategory_id", subcategory_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
-//        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id)
+        val categoryPart = MultipartBody.Part.createFormData("category_id", category_id.toString())
+        val subcategoryPart = MultipartBody.Part.createFormData("subcategory_id", subcategory_id.toString())
+        val countryPart = MultipartBody.Part.createFormData("category_id", country_id.toString())
+        val regionPart = MultipartBody.Part.createFormData("category_id", region_id.toString())
+        val activePart = MultipartBody.Part.createFormData("category_id", is_active.toString())
+        val titlePart = MultipartBody.Part.createFormData("category_id", title)
+        val descriptionPart = MultipartBody.Part.createFormData("category_id", description)
+        val pricePart = MultipartBody.Part.createFormData("category_id", price.toString())
+        val photosPart = MultipartBody.Part.createFormData("category_id", photos.toString())
 
-        val res = SkovService.getInstance().postItem(
-        )
+//        val res = SkovService.getInstance().postItem(
+//        )
     }
 }
