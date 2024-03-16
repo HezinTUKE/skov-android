@@ -1,6 +1,7 @@
 package com.example.skov.network
 
 import com.example.skov.item.ItemResponseModel
+import com.example.skov.item_create.PostItemResponse
 import com.example.skov.type.TypeModels.ListCategory
 import com.example.skov.type.TypeModels.ListSubCategory
 import com.example.skov.like.LikeModel
@@ -173,5 +174,5 @@ interface SkovService {
         @Part description : MultipartBody.Part,
         @Part price : MultipartBody.Part,
         @Part photos : MultipartBody.Part,
-    )
+    ) : Call<PostItemResponse?>
 }

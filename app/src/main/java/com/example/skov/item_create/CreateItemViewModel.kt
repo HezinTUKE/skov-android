@@ -3,11 +3,17 @@ package com.example.skov.item_create
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.skov.network.SkovService
+import com.example.skov.state.Error
 import com.example.skov.state.FEState
+import com.example.skov.state.IsNotAuthenticated
 import com.example.skov.state.Loading
+import com.example.skov.state.Success
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import okhttp3.MultipartBody
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Callback
 
 class CreateItemViewModel : ViewModel() {
     private val itemResponse =  MutableStateFlow<FEState<PostItemResponse>>(Loading(null))
@@ -35,7 +41,35 @@ class CreateItemViewModel : ViewModel() {
         val pricePart = MultipartBody.Part.createFormData("category_id", price.toString())
         val photosPart = MultipartBody.Part.createFormData("category_id", photos.toString())
 
-//        val res = SkovService.getInstance().postItem(
-//        )
+        val res = SkovService.getInstance().postItem(
+            "Token $token",
+            categoryPart,
+            subcategoryPart,
+            countryPart,
+            regionPart,
+            activePart,
+            titlePart,
+            descriptionPart,
+            pricePart,
+            photosPart
+        )
+
+        res.enqueue(object : Callback<PostItemResponse?>{
+            override fun onResponse(
+                call: Call<PostItemResponse?>,
+                response: Response<PostItemResponse?>
+            ) {
+                if(response.code() == 401 || response.code() == 405) {
+                    itemResponse.value = IsNotAuthenticated(null)
+                }else{
+                    itemResponse.value = Success(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<PostItemResponse?>, t: Throwable) {
+                itemResponse.value = Error(null)
+            }
+
+        })
     }
 }
