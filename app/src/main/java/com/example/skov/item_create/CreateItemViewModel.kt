@@ -20,16 +20,16 @@ class CreateItemViewModel : ViewModel() {
     val itemResponseObserver = itemResponse.asStateFlow()
 
     fun postItem(
-        category_id : Int,
-        subcategory_id : Int,
-        country_id : Int,
-        region_id : Int,
-        is_active : Boolean,
+        category_id: Int,
+        subcategory_id: Int,
+        country_id: Int,
+        region_id: Int,
+        is_active: Boolean,
         title: String,
-        description : String,
-        price : Int = 25,
-        photos : List<Uri>,
-        token : String
+        description: String,
+        price: Int = 25,
+        photos: List<Uri?>,
+        token: String
     ){
         val categoryPart = MultipartBody.Part.createFormData("category_id", category_id.toString())
         val subcategoryPart = MultipartBody.Part.createFormData("subcategory_id", subcategory_id.toString())

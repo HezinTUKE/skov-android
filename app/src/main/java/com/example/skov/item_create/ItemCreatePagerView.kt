@@ -71,6 +71,10 @@ fun ItemCreatePagerView(
         mutableStateOf<String?>(null)
     }
 
+    val immediately = remember {
+        mutableStateOf<Boolean?>(null)
+    }
+
     val scrollState = rememberScrollState()
 
     Box(
@@ -139,7 +143,24 @@ fun ItemCreatePagerView(
                 5 -> {
                     text.value = "Select activation date"
 
-                    StepSixView(postDate = postDate)
+                    StepSixView(
+                        postDate = postDate,
+                        immediately = immediately
+                    )
+                }
+
+                6 -> {
+                    PostItemView(
+                        category_id = category.value,
+                        subcategory_id = subcategory.value,
+                        country_id = country.value,
+                        region_id = region.value,
+                        is_active = immediately.value!!,
+                        title = name.value,
+                        description = description.value,
+                        price = 25,
+                        photos = selectedImages.toList(),
+                    )
                 }
             }
         }

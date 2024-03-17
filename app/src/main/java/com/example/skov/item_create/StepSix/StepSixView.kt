@@ -36,6 +36,7 @@ import com.example.skov.widgets.datepicker.SkovDatePicker
 @Composable
 fun StepSixView(
     postDate : MutableState<String?>,
+    immediately : MutableState<Boolean?>,
     dateViewModel : DateViewModel = viewModel()
 ) {
     val datePickerState = remember {
@@ -57,6 +58,7 @@ fun StepSixView(
                     value = dateDialogEnable,
                     onValueChange = {
                         setEnable(!dateDialogEnable)
+                        immediately.value = !dateDialogEnable
                     },
                     role = Role.Checkbox
                 )
