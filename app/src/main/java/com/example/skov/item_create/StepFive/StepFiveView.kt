@@ -1,5 +1,6 @@
 package com.example.skov.item_create.StepFive
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,11 +12,13 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skov.location.LocationView
 import com.example.skov.widgets.buttons.SkovOutlinedButton
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -25,6 +28,8 @@ fun StepFiveView(
     district : MutableState<Int>,
     pager: PagerState
 ){
+    val coroutine = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -36,7 +41,10 @@ fun StepFiveView(
             locationState = country,
             idLocation = null
         )
-        if (country.value > 0){
+        if (country.value ==1){
+
+            Log.d("HelloLocation", country.value.toString())
+
             Spacer(
                 modifier = Modifier
                     .height(25.dp)
@@ -72,7 +80,9 @@ fun StepFiveView(
             SkovOutlinedButton(
                 text = "Ok",
                 onClick = {
-
+                    coroutine.launch {
+                        pager.scrollToPage(pager.currentPage + 1)
+                    }
                 }
             )
         }

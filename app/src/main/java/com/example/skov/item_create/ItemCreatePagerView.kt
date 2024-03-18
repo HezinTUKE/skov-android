@@ -145,11 +145,13 @@ fun ItemCreatePagerView(
 
                     StepSixView(
                         postDate = postDate,
-                        immediately = immediately
+                        immediately = immediately,
+                        pager = pagerState
                     )
                 }
 
                 6 -> {
+                    text.value = ""
                     PostItemView(
                         category_id = category.value,
                         subcategory_id = subcategory.value,
