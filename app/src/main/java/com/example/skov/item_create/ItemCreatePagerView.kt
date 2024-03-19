@@ -152,8 +152,6 @@ fun ItemCreatePagerView(
                 }
 
                 6 -> {
-                    Log.d("StepSix", "")
-
                     text.value = ""
                     PostItemView(
                         category_id = category.value,
