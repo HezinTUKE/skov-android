@@ -2,6 +2,7 @@ package com.example.skov.item_create
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.Orientation
@@ -72,7 +73,7 @@ fun ItemCreatePagerView(
     }
 
     val immediately = remember {
-        mutableStateOf<Boolean?>(null)
+        mutableStateOf(true)
     }
 
     val scrollState = rememberScrollState()
@@ -151,6 +152,8 @@ fun ItemCreatePagerView(
                 }
 
                 6 -> {
+                    Log.d("StepSix", "")
+
                     text.value = ""
                     PostItemView(
                         category_id = category.value,

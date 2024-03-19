@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun StepSixView(
     postDate : MutableState<String?>,
-    immediately : MutableState<Boolean?>,
+    immediately : MutableState<Boolean>,
     dateViewModel : DateViewModel = viewModel(),
     pager : PagerState
 ) {
@@ -105,8 +105,6 @@ fun StepSixView(
             SkovOutlinedButton(
                 text = "Ok",
                 onClick = {
-
-
                     coroutine.launch {
 
                         if (dateDialogEnable) {
