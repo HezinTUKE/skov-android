@@ -1,6 +1,11 @@
 package com.example.skov.item_create
 
+import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.util.Log
+import android.webkit.MimeTypeMap
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.skov.network.SkovService
 import com.example.skov.state.Error
@@ -10,15 +15,21 @@ import com.example.skov.state.Loading
 import com.example.skov.state.Success
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
+import java.io.InputStream
+
 
 class CreateItemViewModel : ViewModel() {
     private val itemResponse =  MutableStateFlow<FEState<PostItemResponse>>(Loading(null))
     val itemResponseObserver = itemResponse.asStateFlow()
 
+    @RequiresApi(Build.VERSION_CODES.R)
     fun postItem(
         category_id: Int,
         subcategory_id: Int,
@@ -29,17 +40,40 @@ class CreateItemViewModel : ViewModel() {
         description: String,
         price: Int = 25,
         photos: List<Uri?>,
-        token: String
+        token: String,
+        context : Context
     ){
         val categoryPart = MultipartBody.Part.createFormData("category_id", category_id.toString())
         val subcategoryPart = MultipartBody.Part.createFormData("subcategory_id", subcategory_id.toString())
-        val countryPart = MultipartBody.Part.createFormData("category_id", country_id.toString())
-        val regionPart = MultipartBody.Part.createFormData("category_id", region_id.toString())
-        val activePart = MultipartBody.Part.createFormData("category_id", is_active.toString())
-        val titlePart = MultipartBody.Part.createFormData("category_id", title)
-        val descriptionPart = MultipartBody.Part.createFormData("category_id", description)
-        val pricePart = MultipartBody.Part.createFormData("category_id", price.toString())
-        val photosPart = MultipartBody.Part.createFormData("category_id", photos.toString())
+        val countryPart = MultipartBody.Part.createFormData("country_id", country_id.toString())
+        val regionPart = MultipartBody.Part.createFormData("region_id", region_id.toString())
+        val activePart = MultipartBody.Part.createFormData("is_active", is_active.toString())
+        val titlePart = MultipartBody.Part.createFormData("title", title)
+        val descriptionPart = MultipartBody.Part.createFormData("description", description)
+        val pricePart = MultipartBody.Part.createFormData("price", price.toString())
+        val photosPart = ArrayList<MultipartBody.Part>()
+
+        val resolver = context.contentResolver
+        val mime = MimeTypeMap.getSingleton()
+
+        photos.forEach {uri ->
+            val inputStream : InputStream? = resolver.openInputStream(uri!!)
+
+            val type = mime.getExtensionFromMimeType(resolver.getType(uri))
+
+            val file : File = createTempFile(suffix = type.toString())
+
+            file.writeBytes(inputStream!!.readBytes())
+
+            val body = file.asRequestBody("image/${type}".toMediaTypeOrNull())
+
+            photosPart.add(
+                MultipartBody.Part.createFormData("photos",
+                        file.name.toString(),
+                        body
+                )
+            )
+        }
 
         val res = SkovService.getInstance().postItem(
             "Token $token",
@@ -67,6 +101,9 @@ class CreateItemViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<PostItemResponse?>, t: Throwable) {
+                Log.d("Error", call.toString())
+                Log.d("Error", t.toString())
+
                 itemResponse.value = Error(null)
             }
 

@@ -161,6 +161,7 @@ interface SkovService {
         Create Item
     **/
 
+    @Multipart
     @POST("items/item")
     fun postItem(
         @Header("Authorization") token: String,
@@ -173,6 +174,6 @@ interface SkovService {
         @Part title : MultipartBody.Part,
         @Part description : MultipartBody.Part,
         @Part price : MultipartBody.Part,
-        @Part photos : MultipartBody.Part,
+        @Part photos : ArrayList<MultipartBody.Part>,
     ) : Call<PostItemResponse?>
 }

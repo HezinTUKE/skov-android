@@ -158,7 +158,7 @@ fun ItemCreatePagerView(
                         subcategory_id = subcategory.value,
                         country_id = country.value,
                         region_id = region.value,
-                        is_active = immediately.value!!,
+                        is_active = immediately.value,
                         title = name.value,
                         description = description.value,
                         price = 25,

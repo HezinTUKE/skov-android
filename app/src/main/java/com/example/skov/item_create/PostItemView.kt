@@ -52,6 +52,7 @@ fun PostItemView(
             price,
             photos,
             token,
+            context
         )
     }
 
