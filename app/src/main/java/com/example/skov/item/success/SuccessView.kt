@@ -70,7 +70,9 @@ fun SuccessView(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                 )
-                LikeView(id, item.is_liked)
+                if(!item.is_owner){
+                    LikeView(id, item.is_liked)
+                }
             }
             Row(
                 modifier = Modifier

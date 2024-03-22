@@ -22,8 +22,6 @@ class ViewModel : ViewModel() {
         token : String,
         id : Int
     ){
-
-
         val req = SkovService.getInstance().getItem(id, "Token $token")
 
         req.enqueue(object : Callback<ItemResponseModel> {
