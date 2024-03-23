@@ -50,9 +50,9 @@ fun NavigationView(
         ){
             val uId = it.arguments?.getInt("id")
             Log.d("UID_", uId.toString())
-            CommonAppBar(controller) {
+//            CommonAppBar(controller) {
                 ItemView(id = uId!!)
-            }
+//            }
         }
     }
 }
