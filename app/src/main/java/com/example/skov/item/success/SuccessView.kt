@@ -10,8 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
@@ -154,9 +155,19 @@ fun SuccessView(
             },
             content = {
                 if(item.is_owner){
-                    Text(text = "Add")
+                    Text(text = "Delete")
+                    Icon(
+                        modifier = Modifier.padding(start = 5.dp),
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null,
+                    )
                 }else{
-                    Text(text = "Settings")
+                    Text(text = "Add")
+                    Icon(
+                        modifier = Modifier.padding(start = 5.dp),
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
                 }
             }
         )
