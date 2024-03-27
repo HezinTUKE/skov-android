@@ -29,7 +29,7 @@ import java.io.InputStream
 class CreateItemViewModel : ViewModel() {
     private val itemResponse =  MutableStateFlow<FEState<PostItemResponse>>(Loading(null))
     private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-
+    
     val itemResponseObserver = itemResponse.asStateFlow()
 
     private fun randomStringByKotlinCollectionRandom() = List(10) {

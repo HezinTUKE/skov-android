@@ -8,11 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skov.LoadingView
-import com.example.skov.item.state.Error
-import com.example.skov.item.state.Loading
-import com.example.skov.item.state.Success
 import com.example.skov.item.success.SuccessView
 import com.example.skov.login.UserSession
+import com.example.skov.state.*
 import kotlinx.coroutines.flow.first
 
 @Composable
@@ -32,9 +30,11 @@ fun ItemView(
         is Loading ->
             LoadingView()
         is Success ->
-            SuccessView(response.response!!.item, id)
+            SuccessView(response.state!!.item, id)
         is Error ->
             Text("error")
+        is IsNotAuthenticated ->
+            Text(text = "")
     }
 
 }

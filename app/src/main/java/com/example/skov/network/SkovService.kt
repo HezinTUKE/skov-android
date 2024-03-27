@@ -1,6 +1,7 @@
 package com.example.skov.network
 
 import com.example.skov.item.ItemResponseModel
+import com.example.skov.item.RemoveItemModel
 import com.example.skov.item_create.PostItemResponse
 import com.example.skov.type.TypeModels.ListCategory
 import com.example.skov.type.TypeModels.ListSubCategory
@@ -18,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -176,4 +178,16 @@ interface SkovService {
         @Part price : MultipartBody.Part,
         @Part photos : ArrayList<MultipartBody.Part>,
     ) : Call<PostItemResponse?>
+
+    /**
+        Remove Item
+    **/
+
+    @Multipart
+    @DELETE("items/item")
+    fun removeItem(
+        @Header("Authorization") token: String,
+
+        @Part item_id : MultipartBody.Part
+    ) : Call<RemoveItemModel>
 }
