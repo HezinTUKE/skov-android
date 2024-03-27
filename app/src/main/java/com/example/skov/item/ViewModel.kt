@@ -31,11 +31,15 @@ class ViewModel : ViewModel() {
                 call: Call<RemoveItemModel>,
                 response: Response<RemoveItemModel>
             ) {
-//                removeObserver.value = Success(response.body())
+                responseRemoveItem.value = Success(response.body())
+
+                if(response.code() == 401 || response.code() == 405) {
+                    responseRemoveItem.value = IsNotAuthenticated(null)
+                }
             }
 
             override fun onFailure(call: Call<RemoveItemModel>, t: Throwable) {
-//                removeObserver.value = Error(null)
+                responseRemoveItem.value = Error(null)
             }
         })
     }
