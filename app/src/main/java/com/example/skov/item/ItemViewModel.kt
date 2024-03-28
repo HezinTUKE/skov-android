@@ -11,20 +11,23 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.skov.state.*
 
-class ViewModel : ViewModel() {
+class ItemViewModel : ViewModel() {
     private val responseItem = MutableStateFlow<FEState<ItemResponseModel>>(Loading(null))
     val state = responseItem.asStateFlow()
 
     private val responseRemoveItem = MutableStateFlow<FEState<RemoveItemModel>>(Loading(null))
     val removeObserver = responseRemoveItem.asStateFlow()
 
+    private var token : String? = null
+
+    fun setToken(token: String){
+        this.token = "Token $token"
+    }
+
     fun removeItem(
-        token : String,
         id : Int
     ){
-        val item_id = MultipartBody.Part.createFormData("id", id.toString())
-
-        val req = SkovService.getInstance().removeItem(token, item_id)
+        val req = SkovService.getInstance().removeItem(this.token!!, id.toString())
 
         req.enqueue(object : Callback<RemoveItemModel> {
             override fun onResponse(
@@ -45,10 +48,9 @@ class ViewModel : ViewModel() {
     }
 
     fun getItem(
-        token : String,
         id : Int
     ){
-        val req = SkovService.getInstance().getItem(id, "Token $token")
+        val req = SkovService.getInstance().getItem(id, this.token!!)
 
         req.enqueue(object : Callback<ItemResponseModel> {
             override fun onResponse(

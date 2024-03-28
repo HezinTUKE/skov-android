@@ -37,11 +37,7 @@ fun NavigationView(
                 )
             }
         }
-//        composable(Routes.ITEM_CREATE.route){
-//            CommonAppBar(controller) {
-//                ItemCreatePagerView()
-//            }
-//        }
+
         composable(
             route = "${Routes.ITEM.route}?id={id}",
             arguments = listOf(navArgument("id") {
@@ -51,7 +47,10 @@ fun NavigationView(
             val uId = it.arguments?.getInt("id")
             Log.d("UID_", uId.toString())
 //            CommonAppBar(controller) {
-                ItemView(id = uId!!)
+                ItemView(
+                    id = uId!!,
+                    onList = {controller.navigate(Routes.LIST.route)}
+                )
 //            }
         }
     }

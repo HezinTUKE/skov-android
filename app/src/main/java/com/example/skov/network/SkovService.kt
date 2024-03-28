@@ -25,6 +25,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -183,11 +184,9 @@ interface SkovService {
         Remove Item
     **/
 
-    @Multipart
-    @DELETE("items/item")
+    @DELETE("items/item/{id}")
     fun removeItem(
         @Header("Authorization") token: String,
-
-        @Part item_id : MultipartBody.Part
+        @Path("id") id : String
     ) : Call<RemoveItemModel>
 }

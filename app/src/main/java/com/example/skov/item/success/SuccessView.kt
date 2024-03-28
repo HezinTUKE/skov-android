@@ -1,5 +1,6 @@
 package com.example.skov.item.success
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,23 +29,53 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.skov.R
 import com.example.skov.item.Item
+import com.example.skov.item.ItemViewModel
 import com.example.skov.like.LikeView
+import com.example.skov.state.Error
+import com.example.skov.state.IsNotAuthenticated
+import com.example.skov.state.Loading
+import com.example.skov.state.Success
 import com.example.skov.utils.pagers.ImagePreview
 import com.example.skov.widgets.buttons.BottomButton
 
 @Composable
 fun SuccessView(
     item : Item,
-    id : Int
+    id : Int,
+    itemViewModel: ItemViewModel,
+    onList :  () -> Unit
 ){
     var linesDescription by remember {
         mutableStateOf(false)
+    }
+
+    val removeObserver by itemViewModel.removeObserver.collectAsState()
+
+    LaunchedEffect(removeObserver.state){
+        when(removeObserver){
+            is Loading -> {
+
+            }
+            is Success -> {
+                if (removeObserver.state!!.code == 1){
+                    onList()
+                }else{
+
+                }
+            }
+            is Error -> {
+            }
+            is IsNotAuthenticated -> {
+
+            }
+        }
     }
 
     Column(
@@ -151,7 +184,12 @@ fun SuccessView(
 
         BottomButton(
             onClickAct = {
+                if(item.is_owner){
+                    itemViewModel.removeItem(id)
 
+                }else {
+
+                }
             },
             content = {
                 if(item.is_owner){

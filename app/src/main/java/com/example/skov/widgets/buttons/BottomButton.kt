@@ -30,7 +30,6 @@ fun BottomButton(
         Button(
             modifier = Modifier.fillMaxWidth(0.95f),
             shape = RectangleShape,
-            enabled = false,
             onClick = onClickAct,
             colors = ButtonColors(
                 containerColor = Color.White,
