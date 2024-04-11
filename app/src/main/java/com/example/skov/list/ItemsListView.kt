@@ -31,7 +31,7 @@ fun ListView(
 
     LaunchedEffect(responseResult) {
         val token = UserSession.getAccessToken( context ).first()
-        viewModelItems.getList(token)
+        viewModelItems.getList(token, 0)
     }
 
     when(responseResult){

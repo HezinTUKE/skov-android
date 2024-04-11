@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.skov.AppBar.CommonAppBar
+import com.example.skov.auction.create.AuctionCreateView
 import com.example.skov.item.ItemView
 import com.example.skov.item_create.ItemCreatePagerView
 import com.example.skov.list.ListView
@@ -37,7 +38,11 @@ fun NavigationView(
                 )
             }
         }
-
+        composable(Routes.AUCTION_CREATE.route){
+            CommonAppBar(controller) {
+                AuctionCreateView()
+            }
+        }
         composable(
             route = "${Routes.ITEM.route}?id={id}",
             arguments = listOf(navArgument("id") {

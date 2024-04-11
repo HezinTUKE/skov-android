@@ -27,6 +27,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Streaming
 import java.util.concurrent.TimeUnit
 
 interface SkovService {
@@ -110,9 +111,10 @@ interface SkovService {
      list module
      **/
 
-    @GET("items/list")
+    @GET("items/list/{type}")
     fun getList(
         @Header("Authorization") token: String,
+        @Path("type") type : Int
     ) : Call<Items?>
     /**
      item view
@@ -189,4 +191,14 @@ interface SkovService {
         @Header("Authorization") token: String,
         @Path("id") id : String
     ) : Call<RemoveItemModel>
+
+    /**
+        Create auction
+    **/
+
+    @POST("auction/create")
+    fun createAuction(
+        @Header("Authorization") token: String,
+        @Path("id") id : String
+    )
 }

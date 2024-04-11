@@ -19,10 +19,11 @@ class ItemsViewModel : ViewModel(){
     var flag: Boolean by mutableStateOf(false)
 
     fun getList(
-        token : String
+        token : String,
+        type : Int
     ){
         val res = SkovService.getInstance().getList(
-            "Token $token",
+            "Token $token", type
         )
 
         res.enqueue(object : Callback<Items?> {

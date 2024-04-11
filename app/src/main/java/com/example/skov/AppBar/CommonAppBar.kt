@@ -1,5 +1,7 @@
 package com.example.skov.AppBar
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import com.example.skov.R
 import com.example.skov.item_create.ItemCreateView
 import com.example.skov.navigation.Routes
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CommonAppBar(
     navHost : NavHostController,
@@ -67,12 +70,20 @@ fun CommonAppBar(
                             contentDescription = "Messages"
                         )
                     }
+                    IconButton(onClick = {
+                        navHost.navigate(Routes.AUCTION_CREATE.route)
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.auction),
+                            modifier = Modifier.size(25.dp),
+                            contentDescription = "Auction"
+                        )
+                    }
                 },
 
                 floatingActionButton = {
                     FloatingActionButton(
                         onClick = {
-//                            navHost.navigate(Routes.ITEM_CREATE.route)
                             openCreate.value = !openCreate.value
                         },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
@@ -92,7 +103,6 @@ fun CommonAppBar(
             Modifier
                 .fillMaxSize()
                 .padding(it)
-
             if(openCreate.value){
                     ItemCreateView(openCreate)
             }else {
